@@ -1,0 +1,279 @@
+fileFormatVersion: 2
+guid: ed2985369ac355c47a5a68c69375244a
+ModelImporter:
+  serializedVersion: 22200
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: Factice001
+  - first:
+      1: 100002
+    second: Factice002
+  - first:
+      1: 100004
+    second: //RootNode
+  - first:
+      1: 100006
+    second: WORM
+  - first:
+      1: 100008
+    second: WORM_
+  - first:
+      1: 100010
+    second: WORM_ Head
+  - first:
+      1: 100012
+    second: WORM_ Neck
+  - first:
+      1: 100014
+    second: WORM_ Pelvis
+  - first:
+      1: 100016
+    second: WORM_ Spine
+  - first:
+      1: 100018
+    second: WORM_ Tail
+  - first:
+      1: 100020
+    second: WORM_ Tail1
+  - first:
+      1: 100022
+    second: WORM_ Tail2
+  - first:
+      1: 100024
+    second: WORM_ Tail3
+  - first:
+      1: 100026
+    second: WORM_ Tail4
+  - first:
+      1: 100028
+    second: WORM_MOUTH
+  - first:
+      1: 100030
+    second: WORM_TOOTH_A
+  - first:
+      1: 100032
+    second: WORM_TOOTH_B
+  - first:
+      1: 100034
+    second: WORM_TOOTH_C
+  - first:
+      1: 100036
+    second: WORM_TOOTH_D
+  - first:
+      1: 100038
+    second: WORM_TOOTH_E
+  - first:
+      1: 100040
+    second: WORM_TOOTH_F
+  - first:
+      1: 100042
+    second: WORM_TOOTH_G
+  - first:
+      1: 100044
+    second: WORM_TOOTH_H
+  - first:
+      4: 400000
+    second: Factice001
+  - first:
+      4: 400002
+    second: Factice002
+  - first:
+      4: 400004
+    second: //RootNode
+  - first:
+      4: 400006
+    second: WORM
+  - first:
+      4: 400008
+    second: WORM_
+  - first:
+      4: 400010
+    second: WORM_ Head
+  - first:
+      4: 400012
+    second: WORM_ Neck
+  - first:
+      4: 400014
+    second: WORM_ Pelvis
+  - first:
+      4: 400016
+    second: WORM_ Spine
+  - first:
+      4: 400018
+    second: WORM_ Tail
+  - first:
+      4: 400020
+    second: WORM_ Tail1
+  - first:
+      4: 400022
+    second: WORM_ Tail2
+  - first:
+      4: 400024
+    second: WORM_ Tail3
+  - first:
+      4: 400026
+    second: WORM_ Tail4
+  - first:
+      4: 400028
+    second: WORM_MOUTH
+  - first:
+      4: 400030
+    second: WORM_TOOTH_A
+  - first:
+      4: 400032
+    second: WORM_TOOTH_B
+  - first:
+      4: 400034
+    second: WORM_TOOTH_C
+  - first:
+      4: 400036
+    second: WORM_TOOTH_D
+  - first:
+      4: 400038
+    second: WORM_TOOTH_E
+  - first:
+      4: 400040
+    second: WORM_TOOTH_F
+  - first:
+      4: 400042
+    second: WORM_TOOTH_G
+  - first:
+      4: 400044
+    second: WORM_TOOTH_H
+  - first:
+      43: 4300000
+    second: WORM
+  - first:
+      74: 7400000
+    second: Take 001
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      111: 11100000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: WORM
+  externalObjects: {}
+  materials:
+    materialImportMode: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: WORM_
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 2
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 0
+    importVisibility: 0
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 4
+    normalCalculationMode: 0
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips:
+  - 7f404b926f1a4ca4fa04819838d59d94
+  - c4b8bcf9fb4b7d64184a63daa7089f91
+  - 332c0bb30dc53e944a378f57b0ea692d
+  - c506d26a84d25ac46bf443c73c4f63d7
+  - 01614a0d124ee6741b092f10f59803c2
+  - 720a00bc975f9e5449039c8e2afa6b93
+  - 6af659e6197ec7748bd8db64eb0c08e4
+  - 6ab906003efdcd04e9552c5737d44be4
+  - c6c598669966676498f505adade2c678
+  - 68edc7ba8f2f97149bb213a88b264a65
+  - 52c94cef9de83ad4aad90998628728e7
+  - e72dcbffef602d440b36464af1d9971b
+  - 822ea2e6ed3fbb340a724c9b527a2bc4
+  - ebb0edc23719f0942ac59bd521c1dc60
+  - 6f4b78c30eb60e64e99090f50d3fc114
+  - 9076fc3460a952941947fab6e5063c10
+  - 494a65c86de14984e862d05760fe2e60
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: WORM_
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  importBlendShapeDeformPercent: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

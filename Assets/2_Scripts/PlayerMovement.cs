@@ -30,6 +30,9 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 velocity;
     private int jumpCount = 0;
 
+    private bool isAttacking = false;
+    private bool isGuarding = false;
+
     private void Start()
     {
         speed = walkSpeed;
@@ -37,6 +40,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(Vector2 input)
     {
+        if (isGuarding || AttackCheck()) return;
+
         Vector3 camForward = cam.forward;
         Vector3 camRight = cam.right;
         camForward.y = 0f;
@@ -90,6 +95,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void Jump()
     {
+        if (isGuarding || AttackCheck()) return;
+
         if (isGrounded || jumpCount <= 1)
         {
             animator.SetBool(GROUND, false);
@@ -102,13 +109,28 @@ public class PlayerMovement : MonoBehaviour
 
     public void Attack()
     {
-        if (isGrounded == false) return;
+        if (isGrounded == false || isGuarding) return;
+
         animator.SetTrigger(ATTACK);
     }
 
-    public void Guard(bool isGuarding)
+    private bool AttackCheck()
     {
-        if (isGrounded == false) return;
-        animator.SetBool(GUARD, isGuarding);
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        if (stateInfo.IsName("Attack1")
+            || stateInfo.IsName("Attack2")
+            || stateInfo.IsName("Attack3"))
+        {
+            return true;
+        }
+        else return false;
+    }
+
+    public void Guard(bool guarding)
+    {
+        if (isGrounded == false || AttackCheck()) return;
+
+        isGuarding = guarding;
+        animator.SetBool(GUARD, guarding);
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 
 public class PlayerMovement : MonoBehaviour
 {
-    //이동과 카메라 애니메이션
+    //이동과 카메라 애니메이션 무기콜라이더 켜기
     private static readonly int SPEED = Animator.StringToHash("Speed");
     private static readonly int JUMP = Animator.StringToHash("Jump");
     private static readonly int GROUND = Animator.StringToHash("Ground");
@@ -112,6 +112,10 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded == false || isGuarding) return;
 
         animator.SetTrigger(ATTACK);
+    }
+
+    public void AttackCoroutine()
+    {
         StartCoroutine(AttackForwardMovement());
     }
 

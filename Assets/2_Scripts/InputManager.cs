@@ -17,6 +17,9 @@ public class InputManager : MonoBehaviour
         input = new PlayerInput();
         playerActions = input.Player;
 
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
         movement = GetComponent<PlayerMovement>();
     }
 
@@ -36,6 +39,11 @@ public class InputManager : MonoBehaviour
         playerActions.Run.canceled += RunCancel;
 
         playerActions.Jump.performed += JumpInput;
+
+        playerActions.Attack.performed += AttackInput;
+        
+        playerActions.Guard.performed += GuardInput;
+        playerActions.Guard.canceled += GuardCancel;
     }
 
     private void OnDisable()
@@ -49,6 +57,11 @@ public class InputManager : MonoBehaviour
         playerActions.Run.canceled -= RunCancel;
 
         playerActions.Jump.performed -= JumpInput;
+
+        playerActions.Attack.performed -= AttackInput;
+        
+        playerActions.Guard.performed -= GuardCancel;
+        playerActions.Guard.canceled -= GuardCancel;
     }
 
     #region InputSetting
@@ -76,6 +89,21 @@ public class InputManager : MonoBehaviour
     private void JumpInput(InputAction.CallbackContext context)
     {
         movement.Jump();
+    }
+
+    private void AttackInput(InputAction.CallbackContext context)
+    {
+        movement.Attack();
+    }
+
+    private void GuardInput(InputAction.CallbackContext context)
+    {
+        movement.Guard(true);
+    }
+
+    private void GuardCancel(InputAction.CallbackContext context)
+    {
+        movement.Guard(false);
     }
 
     #endregion

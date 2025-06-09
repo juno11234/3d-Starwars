@@ -5,11 +5,14 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 public class PlayerMovement : MonoBehaviour
-{//이동과 카메라 애니메이션
+{
+    //이동과 카메라 애니메이션
     private static readonly int SPEED = Animator.StringToHash("Speed");
     private static readonly int JUMP = Animator.StringToHash("Jump");
     private static readonly int GROUND = Animator.StringToHash("Ground");
-    
+    private static readonly int ATTACK = Animator.StringToHash("Attack");
+    private static readonly int GUARD = Animator.StringToHash("Guard");
+
     [SerializeField] private CharacterController controller;
     [SerializeField] private Transform cam;
     [SerializeField] private Transform model;
@@ -95,5 +98,17 @@ public class PlayerMovement : MonoBehaviour
             velocity.y = Mathf.Sqrt(jumpHeight * -1f * gravity);
             jumpCount++;
         }
+    }
+
+    public void Attack()
+    {
+        if (isGrounded == false) return;
+        animator.SetTrigger(ATTACK);
+    }
+
+    public void Guard(bool isGuarding)
+    {
+        if (isGrounded == false) return;
+        animator.SetBool(GUARD, isGuarding);
     }
 }

@@ -112,6 +112,21 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded == false || isGuarding) return;
 
         animator.SetTrigger(ATTACK);
+        StartCoroutine(AttackForwardMovement());
+    }
+
+    private IEnumerator AttackForwardMovement()
+    {
+        float duration = 0.3f; // 이동 지속 시간
+        float elapsed = 0f;
+        float moveSpeed = 5f; // 앞으로 미는 속도
+
+        while (elapsed < duration)
+        {
+            controller.Move(model.forward.normalized * (moveSpeed * Time.deltaTime));
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
     }
 
     private bool AttackCheck()

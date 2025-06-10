@@ -770,7 +770,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4828579324529775786, guid: 21b1f21fdd055c747a83849662e8eb43,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1518281615}
+      addedObject: {fileID: 1518281618}
   m_SourcePrefab: {fileID: 100100000, guid: 21b1f21fdd055c747a83849662e8eb43, type: 3}
 --- !u!1 &872003825
 GameObject:
@@ -1074,7 +1074,7 @@ GameObject:
   - component: {fileID: 961937285}
   - component: {fileID: 961937284}
   - component: {fileID: 961937283}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1290,27 +1290,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &1518281615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1518281613}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a9907e8213f1e047bb3b5614845abc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controller: {fileID: 1518281614}
-  cam: {fileID: 436757814}
-  model: {fileID: 1518281617}
-  animator: {fileID: 1308955397}
-  walkSpeed: 4
-  runSpeed: 8
-  jumpHeight: 2.5
-  rotationSpeed: 10
-  gravity: -9.81
 --- !u!114 &1518281616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1329,6 +1308,26 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 706238653}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1518281618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1518281613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 645c8bf6f63ecfc4288ea5daf1b98ebb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 1518281614}
+  cam: {fileID: 436757814}
+  model: {fileID: 1518281617}
+  animator: {fileID: 1308955397}
+  walkSpeed: 5
+  runSpeed: 9
+  jumpHeight: 3
+  gravity: -9.81
 --- !u!1 &1519592009
 GameObject:
   m_ObjectHideFlags: 3
@@ -1777,7 +1776,7 @@ GameObject:
   - component: {fileID: 1863074317}
   - component: {fileID: 1863074316}
   - component: {fileID: 1863074315}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -350,13 +350,13 @@ AnimatorStateMachine:
     m_Position: {x: 360, y: 80, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8432516848068989688}
-    m_Position: {x: 150, y: 20, z: 0}
+    m_Position: {x: 70, y: -40, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4283421217656957846}
     m_Position: {x: 140, y: -110, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1022462596478646832}
-    m_Position: {x: 390, y: -100, z: 0}
+    m_Position: {x: 380, y: -120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3140556788436719626}
     m_Position: {x: 130, y: 150, z: 0}
@@ -470,12 +470,6 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: Ground
-    m_Type: 9
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
   - m_Name: Attack
     m_Type: 9
     m_DefaultFloat: 0
@@ -484,6 +478,12 @@ AnimatorController:
     m_Controller: {fileID: 9100000}
   - m_Name: Guard
     m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: Ground
+    m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0

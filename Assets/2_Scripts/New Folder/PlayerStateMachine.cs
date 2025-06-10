@@ -31,7 +31,6 @@ public class PlayerStateMachine : MonoBehaviour
     public bool JumpInput { get; set; }
     public bool AttackInput { get; set; }
     public bool GuardInput { get; set; }
-    public bool TriggerGroundChenck { get; private set; }
     public CharacterController Controller => controller;
     public Animator Animator => animator;
     [Header("참조")] [SerializeField] private CharacterController controller;
@@ -113,21 +112,5 @@ public class PlayerStateMachine : MonoBehaviour
         jumpCount = 0;
         animator.SetTrigger("Ground");
         animator.ResetTrigger("Jump");
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Ground"))
-        {
-            TriggerGroundChenck = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Ground"))
-        {
-            TriggerGroundChenck = false;
-        }
     }
 }

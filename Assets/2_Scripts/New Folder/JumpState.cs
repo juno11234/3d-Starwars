@@ -6,7 +6,7 @@ public class JumpState : IPlayerState
 {
     private PlayerStateMachine player;
     public JumpState(PlayerStateMachine player) => this.player = player;
-
+    
     public void Enter()
     {
         Debug.Log("JumpEnter");
@@ -15,7 +15,7 @@ public class JumpState : IPlayerState
 
     public void Input()
     {
-        if (player.JumpInput && player.TryJump())
+        if (player.JumpInput&&player.TryJump())
         {
             Debug.Log("DoubleJump");
         }
@@ -26,8 +26,9 @@ public class JumpState : IPlayerState
         float speed = player.RunInput ? player.runSpeed : player.walkSpeed;
         player.MoveCharacter(player.MoveInput, speed);
 
-        if (player.Controller.isGrounded && player.TriggerGroundChenck)
+        if (player.Controller.isGrounded)
         {
+           
             player.ChangeState(new MoveState(player), PlayerStateType.Move);
         }
     }

@@ -15,7 +15,7 @@ public class MoveState : IPlayerState
 
     public void Input()
     {
-        if (player.JumpInput && player.TryJump())
+        if (player.JumpInput&&player.TryJump())
         {
             player.ChangeState(new JumpState(player), PlayerStateType.Jump);
         }

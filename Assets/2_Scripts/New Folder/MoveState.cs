@@ -10,11 +10,12 @@ public class MoveState : IPlayerState
     public void Enter()
     {
         Debug.Log("MoveEnter");
+        player.ResetJumpCount();
     }
 
     public void Input()
     {
-        if (player.JumpInput)
+        if (player.JumpInput && player.TryJump())
         {
             player.ChangeState(new JumpState(player), PlayerStateType.Jump);
         }

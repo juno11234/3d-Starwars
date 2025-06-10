@@ -31,6 +31,7 @@ public class PlayerStateMachine : MonoBehaviour
     public bool JumpInput { get; set; }
     public bool AttackInput { get; set; }
     public bool GuardInput { get; set; }
+    public bool TriggerGroundChenck { get; private set; }
     public CharacterController Controller => controller;
     public Animator Animator => animator;
     [Header("참조")] [SerializeField] private CharacterController controller;
@@ -39,15 +40,14 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] private Transform model;
     [SerializeField] private Animator animator;
 
-    [FormerlySerializedAs("walkspeed")]
-    [Header("스탯")]
-    public float walkSpeed = 5f;
+    [Header("스탯")] public float walkSpeed = 5f;
 
     public float runSpeed = 9f;
     public float jumpHeight = 3f;
     public float gravity = -9.81f;
-    
+    public int maxJumpCount = 2;
 
+    [HideInInspector] public int jumpCount = 0;
     private Vector3 velocity;
 
     private void Awake()
@@ -99,9 +99,35 @@ public class PlayerStateMachine : MonoBehaviour
         }
     }
 
-    public void DoJump()
+    public bool TryJump()
     {
+        if (jumpCount >= maxJumpCount) return false;
+        jumpCount++;
         animator.SetTrigger("Jump");
         velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        return true;
+    }
+
+    public void ResetJumpCount()
+    {
+        jumpCount = 0;
+        animator.SetTrigger("Ground");
+        animator.ResetTrigger("Jump");
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Ground"))
+        {
+            TriggerGroundChenck = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Ground"))
+        {
+            TriggerGroundChenck = false;
+        }
     }
 }

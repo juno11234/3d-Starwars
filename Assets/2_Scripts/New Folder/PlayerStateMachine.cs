@@ -23,7 +23,7 @@ public enum PlayerStateType
 [RequireComponent(typeof(CharacterController))]
 public class PlayerStateMachine : MonoBehaviour
 {
-    public PlayerStateType StateType { get; private set; }
+    public PlayerStateType CurrentStateType { get; private set; }
     private IPlayerState currentState;
 
     public Vector2 MoveInput { get; set; }
@@ -43,9 +43,10 @@ public class PlayerStateMachine : MonoBehaviour
     [Header("스탯")]
     public float walkSpeed = 5f;
 
-    [FormerlySerializedAs("runspeed")] public float runSpeed = 9f;
+    public float runSpeed = 9f;
     public float jumpHeight = 3f;
     public float gravity = -9.81f;
+    
 
     private Vector3 velocity;
 
@@ -74,7 +75,7 @@ public class PlayerStateMachine : MonoBehaviour
     {
         currentState?.Exit();
         currentState = newState;
-        StateType = newStateType;
+        CurrentStateType = newStateType;
         currentState?.Enter();
     }
 

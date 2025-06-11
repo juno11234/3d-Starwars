@@ -19,7 +19,6 @@ public class WallRunState : IPlayerState
     public void Enter()
     {
         originalRotation = player.Model.rotation;
-        Debug.Log("벽달리기 진입");
         player.StartWallRun(wallNormal);
         player.ResetJumpCount();
     }
@@ -34,6 +33,8 @@ public class WallRunState : IPlayerState
 
     public void UpdateLogic()
     {
+        player.UsePortal(player);
+        
         // 벽면 법선과 up으로 달리기 방향 계산
         Vector3 forward = player.Model.forward;
         Vector3 runDir = Vector3.ProjectOnPlane(forward, wallNormal).normalized;
@@ -55,6 +56,6 @@ public class WallRunState : IPlayerState
     public void Exit()
     {
         player.Model.rotation = originalRotation;
-        player.StopWallRun();
+        player.StopWallRun_Or_Flying();
     }
 }

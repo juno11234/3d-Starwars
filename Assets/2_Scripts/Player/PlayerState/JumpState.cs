@@ -22,7 +22,7 @@ public class JumpState : IPlayerState
     {
         if (player.JumpInput && player.TryJump())
         {
-            Debug.Log("DoubleJump");
+            
         }
 
         if (player.WallDetector.IsTouchingWall(out Vector3 wallNormal) && player.RunInput)
@@ -33,6 +33,8 @@ public class JumpState : IPlayerState
 
     public void UpdateLogic()
     {
+        player.UsePortal(player);
+        
         float speed = player.RunInput ? player.runSpeed : player.walkSpeed;
         player.MoveCharacter(player.MoveInput, speed);
         timer += Time.deltaTime;

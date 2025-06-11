@@ -9,7 +9,7 @@ public class MoveState : IPlayerState
 
     public void Enter()
     {
-        Debug.Log("무브진입");
+        
         player.ResetJumpCount();
         player.Animator.SetTrigger("Ground");
     }
@@ -24,6 +24,8 @@ public class MoveState : IPlayerState
 
     public void UpdateLogic()
     {
+        player.UsePortal(player);
+        
         float speed = player.RunInput ? player.runSpeed : player.walkSpeed;
         player.MoveCharacter(player.MoveInput, speed);
     }

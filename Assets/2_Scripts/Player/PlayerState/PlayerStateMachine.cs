@@ -29,6 +29,7 @@ public class PlayerStateMachine : MonoBehaviour
     public bool JumpInput { get; set; }
     public bool AttackInput { get; set; }
     public bool GuardInput { get; set; }
+    public bool FlyingInput { get; set; }
 
     //외부참조용
     public CharacterController Controller => controller;
@@ -36,6 +37,7 @@ public class PlayerStateMachine : MonoBehaviour
     public WallDetector WallDetector => wallDetector;
     public Transform Model => model;
     public Vector3 Velocity => velocity;
+    public List<Transform> waypoints;
 
     [Header("참조")] [SerializeField] private CharacterController controller;
     [SerializeField] private Transform cam;
@@ -135,7 +137,6 @@ public class PlayerStateMachine : MonoBehaviour
         return;
     }
 
-   
 
     public void ResetJumpCount() //점프 횟수 초기화
     {
@@ -156,7 +157,7 @@ public class PlayerStateMachine : MonoBehaviour
         animator.SetFloat("Speed", 1f);
     }
 
-    public void StopWallRun() // 원상복구
+    public void StopWallRun_Or_Flying() // 원상복구
     {
         gravity = -9.81f;
         animator.SetFloat("Speed", 0f);
@@ -178,5 +179,15 @@ public class PlayerStateMachine : MonoBehaviour
         rotationRestoreEnd = target;
         rotationRestoreDuration = duration;
         rotationRestoreTimer = 0f;
+    }
+
+    public void UsePortal(PlayerStateMachine player)
+    {
+        if (FlyingInput == false) return;
+        ChangeState(new FlyingState(player, waypoints), PlayerStateType.Flying);
+
+        velocity = Vector3.zero;
+        gravity = 0f;
+        FlyingInput = false;
     }
 }

@@ -122,12 +122,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!4 &88349311 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4125181221942680096, guid: 21b1f21fdd055c747a83849662e8eb43,
-    type: 3}
-  m_PrefabInstance: {fileID: 706238653}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &91896886
 GameObject:
   m_ObjectHideFlags: 3
@@ -742,7 +736,7 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 88349311}
+  m_LookAt: {fileID: 1111874518}
   m_Follow: {fileID: 1518281617}
   m_CommonLens: 1
   m_Lens:
@@ -1047,6 +1041,12 @@ Transform:
   - {fileID: 1519592010}
   m_Father: {fileID: 872003827}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1111874518 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4125181221942680096, guid: 21b1f21fdd055c747a83849662e8eb43,
+    type: 3}
+  m_PrefabInstance: {fileID: 706238653}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1518281617 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3171269208302435026, guid: 21b1f21fdd055c747a83849662e8eb43,

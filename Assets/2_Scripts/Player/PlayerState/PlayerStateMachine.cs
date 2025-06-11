@@ -8,39 +8,39 @@ public enum PlayerStateType
 {
     Move,
     Jump,
-
     WallRun,
     WallJump,
-
     Attack,
     Guard,
-
     Sliding,
-
     Flying,
 }
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerStateMachine : MonoBehaviour
 {
+    //상태전환과 상태별 로직
     public PlayerStateType CurrentStateType { get; private set; }
     private IPlayerState currentState;
 
+    //입력 받아오는 프로퍼티들
     public Vector2 MoveInput { get; set; }
     public bool RunInput { get; set; }
     public bool JumpInput { get; set; }
     public bool AttackInput { get; set; }
     public bool GuardInput { get; set; }
+
+    //외부참조용
     public CharacterController Controller => controller;
     public Animator Animator => animator;
-    [Header("참조")] [SerializeField] private CharacterController controller;
 
+
+    [Header("참조")] [SerializeField] private CharacterController controller;
     [SerializeField] private Transform cam;
     [SerializeField] private Transform model;
     [SerializeField] private Animator animator;
 
     [Header("스탯")] public float walkSpeed = 5f;
-
     public float runSpeed = 9f;
     public float jumpHeight = 3f;
     public float gravity = -9.81f;
@@ -65,21 +65,21 @@ public class PlayerStateMachine : MonoBehaviour
         currentState.UpdateLogic();
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
-        
+
         JumpInput = false;
         AttackInput = false;
     }
 
-    public void ChangeState(IPlayerState newState, PlayerStateType newStateType)
-    {//상태전환 로직
+    public void ChangeState(IPlayerState newState, PlayerStateType newStateType) //상태전환 로직
+    {
         currentState?.Exit();
         currentState = newState;
         CurrentStateType = newStateType;
         currentState?.Enter();
     }
 
-    public void MoveCharacter(Vector2 input, float speed)
-    {//이동 로직
+    public void MoveCharacter(Vector2 input, float speed) //이동 로직
+    {
         Vector3 forward = cam.forward;
         Vector3 right = cam.right;
         forward.y = 0;
@@ -98,8 +98,8 @@ public class PlayerStateMachine : MonoBehaviour
         }
     }
 
-    public bool TryJump()
-    {//점프 로직
+    public bool TryJump() //점프 로직
+    {
         if (jumpCount >= maxJumpCount) return false;
         jumpCount++;
         animator.SetTrigger("Jump");
@@ -107,8 +107,8 @@ public class PlayerStateMachine : MonoBehaviour
         return true;
     }
 
-    public void ResetJumpCount()
-    {//점프 횟수 초기화
+    public void ResetJumpCount() //점프 횟수 초기화
+    {
         jumpCount = 0;
         animator.SetTrigger("Ground");
         animator.ResetTrigger("Jump");

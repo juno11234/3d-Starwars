@@ -4,27 +4,38 @@ using UnityEngine;
 
 public class WallDetector : MonoBehaviour
 {
-    [SerializeField] private float wallCheckDis = 0.6f;
-    [SerializeField] private LayerMask wallLayer;
+    [SerializeField] LayerMask wallLayer;
+    private CapsuleCollider triggerCollider;
+    private bool isTouchingWall;
+    private Vector3 wallNormal;
 
-    public bool IsTouchingWall(out Vector3 wallNormal)
+    void Awake()
     {
-        RaycastHit hit;
-        Vector3 origin = transform.position;
+        triggerCollider = GetComponent<CapsuleCollider>();
+        triggerCollider.isTrigger = true;
+        // 트리거 크기는 Inspector에서 조정
+    }
 
-        if (Physics.Raycast(origin, Vector3.right, out hit, wallCheckDis, wallLayer))
-        {
-            wallNormal = hit.normal;
-            return true;
-        }
+    void OnTriggerStay(Collider other)
+    {
+        if ((wallLayer.value & (1 << other.gameObject.layer)) == 0)
+            return;
+        Vector3 closest = other.ClosestPoint(transform.position);
+        Vector3 dir = transform.position - closest;
+        wallNormal = new Vector3(dir.x, 0f, dir.z).normalized;
+        isTouchingWall = true;
+    }
 
-        if (Physics.Raycast(origin, Vector3.left, out hit, wallCheckDis, wallLayer))
-        {
-            wallNormal = hit.normal;
-            return true;
-        }
+    void OnTriggerExit(Collider other)
+    {
+        if ((wallLayer.value & (1 << other.gameObject.layer)) == 0)
+            return;
+        isTouchingWall = false;
+    }
 
-        wallNormal = Vector3.zero;
-        return false;
+    public bool IsTouchingWall(out Vector3 normal)
+    {
+        normal = wallNormal;
+        return isTouchingWall;
     }
 }

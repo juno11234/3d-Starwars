@@ -52,10 +52,14 @@ public class PlayerStateMachine : MonoBehaviour
     [HideInInspector] public int jumpCount = 0;
     private Vector3 velocity;
     private Vector3 currentWallNormal;
+    private Vector3 originalControllerCenter;
+    private float originalControllerHeight;
 
     private void Awake()
     {
         controller = controller ?? GetComponent<CharacterController>();
+        originalControllerCenter = controller.center;
+        originalControllerHeight = controller.height;
     }
 
     private void Start()
@@ -124,6 +128,10 @@ public class PlayerStateMachine : MonoBehaviour
 
         gravity = 0f;
         velocity.y = 0f;
+
+        //controller.height = originalControllerHeight * 0.8f;
+        controller.center = originalControllerCenter + new Vector3(0f, -0.3f, 0f);
+
         animator.SetTrigger("WallRun");
         animator.SetFloat("Speed", 1f);
     }
@@ -132,5 +140,8 @@ public class PlayerStateMachine : MonoBehaviour
     {
         gravity = -9.81f;
         animator.SetFloat("Speed", 0f);
+
+        controller.height = originalControllerHeight;
+        controller.center = originalControllerCenter;
     }
 }

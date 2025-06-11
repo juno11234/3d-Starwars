@@ -29,10 +29,15 @@ public class WallRunState : IPlayerState
 
     public void UpdateLogic()
     {
-        Vector3 runDir = player.Model.forward;
+        // 벽면 법선과 up으로 달리기 방향 계산
+        Vector3 forward = player.Model.forward;
+        Vector3 runDir = Vector3.ProjectOnPlane(forward, wallNormal).normalized;
+        // 모델 회전: 앞 방향은 runDir, up 방향은 wallNormal
+        player.Model.rotation = Quaternion.LookRotation(runDir, wallNormal);
+        // 이동
         player.Controller.Move(runDir * (wallRunSpeed * Time.deltaTime));
-        
-        if (player.WallDetector.IsTouchingWall(out _)==false)
+        // 벽을 벗어나면 MoveState로 복귀
+        if (!player.WallDetector.IsTouchingWall(out _))
             player.ChangeState(new MoveState(player), PlayerStateType.Move);
     }
 

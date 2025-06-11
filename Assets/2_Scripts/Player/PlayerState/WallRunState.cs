@@ -21,12 +21,15 @@ public class WallRunState : IPlayerState
         originalRotation = player.Model.rotation;
         Debug.Log("벽달리기 진입");
         player.StartWallRun(wallNormal);
+        player.ResetJumpCount();
     }
 
     public void Input()
     {
-        // if(player.JumpInput)
-        //     player.ChangeState(new WallJumpState(player,wallNormal),PlayerStateType.WallJump);
+        if (player.JumpInput)
+        {
+            player.ChangeState(new WallJumpState(player, wallNormal), PlayerStateType.WallJump);
+        }
     }
 
     public void UpdateLogic()
@@ -34,14 +37,17 @@ public class WallRunState : IPlayerState
         // 벽면 법선과 up으로 달리기 방향 계산
         Vector3 forward = player.Model.forward;
         Vector3 runDir = Vector3.ProjectOnPlane(forward, wallNormal).normalized;
+
         // 모델 회전: 앞 방향은 runDir, up 방향은 wallNormal
         player.Model.rotation = Quaternion.LookRotation(runDir, wallNormal);
+
         // 이동
         player.Controller.Move(runDir * (wallRunSpeed * Time.deltaTime));
+
         // 벽을 벗어나면 MoveState로 복귀
         if (!player.WallDetector.IsTouchingWall(out _))
         {
-            player.InitiateRotationRestore(originalRotation,0.5f);
+            player.InitiateRotationRestore(originalRotation, 0.5f);
             player.ChangeState(new MoveState(player), PlayerStateType.Move);
         }
     }

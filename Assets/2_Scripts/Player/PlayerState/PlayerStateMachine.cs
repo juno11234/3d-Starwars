@@ -35,7 +35,7 @@ public class PlayerStateMachine : MonoBehaviour
     public Animator Animator => animator;
     public WallDetector WallDetector => wallDetector;
     public Transform Model => model;
-
+    public Vector3 Velocity => velocity;
 
     [Header("참조")] [SerializeField] private CharacterController controller;
     [SerializeField] private Transform cam;
@@ -53,13 +53,12 @@ public class PlayerStateMachine : MonoBehaviour
     private Vector3 velocity;
     private Vector3 currentWallNormal;
     private Vector3 originalControllerCenter;
-    private float originalControllerHeight;
+
 
     private void Awake()
     {
         controller = controller ?? GetComponent<CharacterController>();
         originalControllerCenter = controller.center;
-        originalControllerHeight = controller.height;
     }
 
     private void Start()
@@ -124,33 +123,44 @@ public class PlayerStateMachine : MonoBehaviour
         return true;
     }
 
+    public float wallJumpHorizontalSpeed = 10f;
+
+    public void TryWallJump(Vector3 jumpDir) //벽 점프 로직
+    {
+        animator.SetTrigger("Jump");
+        velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        jumpCount++;
+        controller.Move(jumpDir * (wallJumpHorizontalSpeed * Time.deltaTime));
+
+        return;
+    }
+
+   
+
     public void ResetJumpCount() //점프 횟수 초기화
     {
         jumpCount = 0;
-        animator.SetTrigger("Ground");
         animator.ResetTrigger("Jump");
     }
 
-    public void StartWallRun(Vector3 wallNormal)
+    public void StartWallRun(Vector3 wallNormal) // 벽달리기
     {
         currentWallNormal = wallNormal;
 
         gravity = 0f;
         velocity.y = 0f;
 
-        //controller.height = originalControllerHeight * 0.8f;
         controller.center = originalControllerCenter + new Vector3(0f, -0.3f, 0f);
 
         animator.SetTrigger("WallRun");
         animator.SetFloat("Speed", 1f);
     }
 
-    public void StopWallRun()
+    public void StopWallRun() // 원상복구
     {
         gravity = -9.81f;
         animator.SetFloat("Speed", 0f);
 
-        controller.height = originalControllerHeight;
         controller.center = originalControllerCenter;
     }
 

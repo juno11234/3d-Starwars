@@ -11,6 +11,7 @@ public class MoveState : IPlayerState
     {
         Debug.Log("무브진입");
         player.ResetJumpCount();
+        player.Animator.SetTrigger("Ground");
     }
 
     public void Input()

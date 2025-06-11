@@ -10,10 +10,11 @@ public enum PlayerStateType
     Jump,
     WallRun,
     WallJump,
-    Attack,
-    Guard,
     Sliding,
     Flying,
+    
+    Attack,
+    Guard,
 }
 
 [RequireComponent(typeof(CharacterController))]
@@ -180,8 +181,8 @@ public class PlayerStateMachine : MonoBehaviour
         rotationRestoreDuration = duration;
         rotationRestoreTimer = 0f;
     }
-
-    public void UsePortal(PlayerStateMachine player)
+   
+    public void UsePortal(PlayerStateMachine player) //활공상태
     {
         if (FlyingInput == false) return;
         ChangeState(new FlyingState(player, waypoints), PlayerStateType.Flying);

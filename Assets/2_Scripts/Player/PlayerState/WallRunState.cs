@@ -7,6 +7,7 @@ public class WallRunState : IPlayerState
     private PlayerStateMachine player;
     private Vector3 wallNormal;
     private float wallRunSpeed;
+    private Quaternion originalRotation;
 
     public WallRunState(PlayerStateMachine p, Vector3 wallNormal)
     {
@@ -17,6 +18,7 @@ public class WallRunState : IPlayerState
 
     public void Enter()
     {
+        originalRotation = player.Model.rotation;
         Debug.Log("벽달리기 진입");
         player.StartWallRun(wallNormal);
     }
@@ -38,11 +40,15 @@ public class WallRunState : IPlayerState
         player.Controller.Move(runDir * (wallRunSpeed * Time.deltaTime));
         // 벽을 벗어나면 MoveState로 복귀
         if (!player.WallDetector.IsTouchingWall(out _))
+        {
+            player.InitiateRotationRestore(originalRotation,0.5f);
             player.ChangeState(new MoveState(player), PlayerStateType.Move);
+        }
     }
 
     public void Exit()
     {
+        player.Model.rotation = originalRotation;
         player.StopWallRun();
     }
 }

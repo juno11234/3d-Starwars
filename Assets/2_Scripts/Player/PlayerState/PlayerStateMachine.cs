@@ -71,6 +71,15 @@ public class PlayerStateMachine : MonoBehaviour
     {
         currentState.Input();
         currentState.UpdateLogic();
+
+        if (isRestoringRotation)
+        {
+            rotationRestoreTimer += Time.deltaTime;
+            float t = rotationRestoreTimer / rotationRestoreDuration;
+            model.rotation = Quaternion.Slerp(rotationRestoreStart, rotationRestoreEnd, t);
+            if (t >= 1f) isRestoringRotation = false;
+        }
+
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
 
@@ -143,5 +152,21 @@ public class PlayerStateMachine : MonoBehaviour
 
         controller.height = originalControllerHeight;
         controller.center = originalControllerCenter;
+    }
+
+    //회전 복구용
+    private bool isRestoringRotation;
+    private Quaternion rotationRestoreStart;
+    private Quaternion rotationRestoreEnd;
+    private float rotationRestoreTimer;
+    private float rotationRestoreDuration = 0.3f;
+
+    public void InitiateRotationRestore(Quaternion target, float duration)
+    {
+        isRestoringRotation = true;
+        rotationRestoreStart = model.rotation;
+        rotationRestoreEnd = target;
+        rotationRestoreDuration = duration;
+        rotationRestoreTimer = 0f;
     }
 }

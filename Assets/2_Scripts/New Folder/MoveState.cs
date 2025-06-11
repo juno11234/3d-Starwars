@@ -9,13 +9,13 @@ public class MoveState : IPlayerState
 
     public void Enter()
     {
-        Debug.Log("MoveEnter");
+        Debug.Log("무브진입");
         player.ResetJumpCount();
     }
 
     public void Input()
     {
-        if (player.JumpInput&&player.TryJump())
+        if (player.JumpInput)
         {
             player.ChangeState(new JumpState(player), PlayerStateType.Jump);
         }
@@ -29,6 +29,6 @@ public class MoveState : IPlayerState
 
     public void Exit()
     {
-        Debug.Log("MoveExit");
+        
     }
 }

@@ -16,7 +16,6 @@ public class JumpState : IPlayerState
         player.Animator.ResetTrigger("Ground");
         player.TryJump();
         jumpCheck = true;
-        
     }
 
     public void Input()
@@ -24,6 +23,11 @@ public class JumpState : IPlayerState
         if (player.JumpInput && player.TryJump())
         {
             Debug.Log("DoubleJump");
+        }
+
+        if (player.WallDetector.IsTouchingWall(out Vector3 wallNormal) && player.RunInput)
+        {
+            player.ChangeState(new WallRunState(player, wallNormal), PlayerStateType.WallRun);
         }
     }
 
@@ -43,7 +47,6 @@ public class JumpState : IPlayerState
     public void Exit()
     {
         timer = 0f;
-        
     }
 
     private void JumpCheck()

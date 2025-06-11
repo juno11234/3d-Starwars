@@ -33,12 +33,15 @@ public class PlayerStateMachine : MonoBehaviour
     //외부참조용
     public CharacterController Controller => controller;
     public Animator Animator => animator;
+    public WallDetector WallDetector => wallDetector;
+    public Transform Model => model;
 
 
     [Header("참조")] [SerializeField] private CharacterController controller;
     [SerializeField] private Transform cam;
     [SerializeField] private Transform model;
     [SerializeField] private Animator animator;
+    [SerializeField] private WallDetector wallDetector;
 
     [Header("스탯")] public float walkSpeed = 5f;
     public float runSpeed = 9f;
@@ -48,6 +51,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     [HideInInspector] public int jumpCount = 0;
     private Vector3 velocity;
+    private Vector3 currentWallNormal;
 
     private void Awake()
     {
@@ -112,5 +116,21 @@ public class PlayerStateMachine : MonoBehaviour
         jumpCount = 0;
         animator.SetTrigger("Ground");
         animator.ResetTrigger("Jump");
+    }
+
+    public void StartWallRun(Vector3 wallNormal)
+    {
+        currentWallNormal = wallNormal;
+
+        gravity = 0f;
+        velocity.y = 0f;
+        animator.SetTrigger("WallRun");
+        animator.SetFloat("Speed", 1f);
+    }
+
+    public void StopWallRun()
+    {
+        gravity = -9.81f;
+        animator.SetFloat("Speed", 0f);
     }
 }

@@ -27,8 +27,5 @@ public class MoveState : IPlayerState
         player.MoveCharacter(player.MoveInput, speed);
     }
 
-    public void Exit()
-    {
-        
-    }
+    public void Exit() { }
 }

@@ -20,7 +20,6 @@ public class WallJumpState : IPlayerState
 
     public void Enter()
     {
-        Debug.Log("벽점프!!");
         Vector3 jumpDir = (wallNormal + Vector3.up).normalized;
 
         player.TryWallJump(jumpDir);
@@ -32,14 +31,16 @@ public class WallJumpState : IPlayerState
     {
         if (player.JumpInput && player.TryJump()) { }
 
-        if (player.WallDetector.IsTouchingWall(out Vector3 wallNormal) && player.RunInput && WallRunCool())
+        if (player.WallDetector.IsTouchingWall(out Vector3 normal) && player.RunInput && WallRunCool())
         {
-            player.ChangeState(new WallRunState(player, wallNormal), PlayerStateType.WallRun);
+            player.ChangeState(new WallRunState(player, normal), PlayerStateType.WallRun);
         }
     }
 
     public void UpdateLogic()
     {
+        player.UsePortal(player);
+        
         runTimer += Time.deltaTime;
 
         if (timer < duration)

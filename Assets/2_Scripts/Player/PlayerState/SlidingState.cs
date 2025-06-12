@@ -1,0 +1,29 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class SlidingState : IPlayerState
+{
+    private PlayerStateMachine player;
+
+    public SlidingState(PlayerStateMachine player)
+    {
+        this.player = player;
+    }
+
+    public void Enter()
+    {
+    }
+
+    public void Input()
+    {
+    }
+
+    public void UpdateLogic()
+    {
+    }
+
+    public void Exit()
+    {
+    }
+}

@@ -4,15 +4,5 @@ using UnityEngine;
 
 public class CombatSysytem : MonoBehaviour
 {
-
-    void Start()
-    {
-        
-    }
-
     
-    void Update()
-    {
-        
-    }
 }

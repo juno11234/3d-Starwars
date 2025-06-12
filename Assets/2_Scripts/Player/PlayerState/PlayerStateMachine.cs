@@ -134,9 +134,7 @@ public class PlayerStateMachine : MonoBehaviour
 
         return;
     }
-
-   
-
+    
     public void ResetJumpCount() //점프 횟수 초기화
     {
         jumpCount = 0;

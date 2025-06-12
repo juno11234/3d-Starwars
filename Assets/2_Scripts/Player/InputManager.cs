@@ -21,13 +21,15 @@ public class InputManager : MonoBehaviour
         Cursor.visible = false;
 
         stateMachine = GetComponent<PlayerStateMachine>();
-        
+
         playerActions.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
 
         playerActions.Run.performed += _ => stateMachine.RunInput = true;
         playerActions.Run.canceled += _ => stateMachine.RunInput = false;
 
         playerActions.Jump.performed += _ => stateMachine.JumpInput = true;
+
+        playerActions.Attack.performed += _ => stateMachine.AttackInput = true;
     }
 
     private void Update()

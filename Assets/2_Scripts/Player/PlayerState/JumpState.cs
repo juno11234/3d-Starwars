@@ -22,7 +22,7 @@ public class JumpState : IPlayerState
     {
         if (player.JumpInput && player.TryJump())
         {
-            Debug.Log("DoubleJump");
+           
         }
 
         if (player.WallDetector.IsTouchingWall(out Vector3 wallNormal) && player.RunInput)

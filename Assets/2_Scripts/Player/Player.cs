@@ -13,19 +13,17 @@ public class Player : MonoBehaviour, IFighter
         public int hp = 100;
         public int maxHp = 100;
     }
-
-    [FormerlySerializedAs("katana")]
+    
     [SerializeField]
     private Blade blade;
-
-    public Collider MainCollider => controller;
-    public GameObject GameObject => gameObject;
-
+    
     public static Player CurrentPlayer;
     public PlayerStat stat;
 
     private CharacterController controller;
 
+    public Collider MainCollider => controller;
+    public GameObject GameObject => gameObject;
     private void Awake()
     {
         stat.hp = stat.maxHp;

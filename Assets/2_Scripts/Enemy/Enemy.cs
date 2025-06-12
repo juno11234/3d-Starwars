@@ -6,19 +6,23 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour, IFighter
 {
+    private static readonly int SPEED = Animator.StringToHash("Speed");
+
     [System.Serializable]
     public class EnemyStat
     {
         public int hp = 100;
         public int maxHp = 100;
-        public int range;
+        public int range = 10;
 
         public float viewAngle = 120f;
         public float viewDistance = 10f;
     }
 
     [SerializeField] Transform[] patrolPoints;
-
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private Transform firePoint;
+    
     public Collider MainCollider => collider;
     public GameObject GameObject => gameObject;
     public EnemyStat stats = new EnemyStat();
@@ -27,8 +31,10 @@ public class Enemy : MonoBehaviour, IFighter
     private Animator animator;
     private NavMeshAgent agent;
     private int destinationIndex = 0;
+    private AnimatorStateInfo currentState;
+
     private bool isPatrol;
-    private bool combatMode;
+    private bool combatMode = false;
 
     private void Awake()
     {
@@ -45,21 +51,40 @@ public class Enemy : MonoBehaviour, IFighter
 
     private void Update()
     {
-        PatrolNextPoint();
+        if (combatMode == false)
+        {
+            WhatchPlayer();
+            PatrolNextPoint();
+        }
+        else
+        {
+            float distance = Vector3.Distance(Player.CurrentPlayer.transform.position, transform.position);
+            currentState = animator.GetCurrentAnimatorStateInfo(0);
+
+            LookPlayer();
+            if (distance > stats.range)
+            {
+                Chase();
+            }
+            else if (distance < stats.range)
+            {
+                Attack();
+            }
+        }
     }
 
     private void Patrol()
     {
+        if (combatMode) return;
+
         agent.SetDestination(patrolPoints[destinationIndex].position);
-        animator.SetFloat("Speed", 0.5f);
+        animator.SetFloat(SPEED, 0.5f);
         isPatrol = true;
         agent.speed = 2f;
     }
 
     private void PatrolNextPoint()
     {
-        if (combatMode) return;
-        
         if (agent.pathPending == false && agent.remainingDistance < 0.2f && isPatrol)
         {
             if (destinationIndex < patrolPoints.Length - 1)
@@ -79,7 +104,7 @@ public class Enemy : MonoBehaviour, IFighter
     {
         isPatrol = false;
 
-        animator.SetFloat("Speed", 0f);
+        animator.SetFloat(SPEED, 0f);
         yield return new WaitForSeconds(3f);
 
         Patrol();
@@ -87,17 +112,61 @@ public class Enemy : MonoBehaviour, IFighter
 
     private void WhatchPlayer()
     {
-        combatMode = true;
+        Vector3 direction = (Player.CurrentPlayer.transform.position - transform.position);
+        float distance = direction.magnitude;
+        direction.Normalize();
+        float angle = Vector3.Angle(transform.forward, direction);
+
+        if (angle > stats.viewAngle * 0.5f || distance > stats.viewDistance) return;
+
+        Physics.Raycast(transform.position + Vector3.up, direction, out RaycastHit hit, stats.viewDistance);
+
+        Debug.Log(hit.collider.gameObject.name);
+
+        if (hit.collider == Player.CurrentPlayer.MainCollider
+            || hit.collider.TryGetComponent(out WallDetector wallDetector))
+        {
+            ChaseStart();
+        }
     }
+
+    private void ChaseStart()
+    {
+        combatMode = true;
+        animator.SetFloat(SPEED, 1f);
+        agent.speed = 9f;
+        agent.SetDestination(Player.CurrentPlayer.transform.position);
+    }
+
 
     private void Chase()
     {
-        animator.SetFloat("Speed", 1f);
+        if (currentState.IsName("Attack") || currentState.IsName("Shoot")) return;
+
+
+        animator.ResetTrigger("Attack");
+
+        agent.isStopped = false;
+        animator.SetFloat(SPEED, 1f);
+        agent.SetDestination(Player.CurrentPlayer.transform.position);
     }
 
     private void Attack()
     {
+        agent.isStopped = true;
         animator.SetTrigger("Attack");
+    }
+
+    public void Shoot()
+    {
+        Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+    }
+
+    private void LookPlayer()
+    {
+        Vector3 direction = Player.CurrentPlayer.transform.position - transform.position;
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
     }
 
     public void TakeDamage()

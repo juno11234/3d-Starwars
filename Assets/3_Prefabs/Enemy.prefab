@@ -4825,7 +4825,7 @@ MonoBehaviour:
   stats:
     hp: 100
     maxHp: 100
-    range: 0
+    range: 10
     viewAngle: 120
     viewDistance: 10
 --- !u!195 &218212390025706959

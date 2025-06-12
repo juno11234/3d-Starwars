@@ -12,8 +12,7 @@ public class WallDetector : MonoBehaviour
     void Awake()
     {
         triggerCollider = GetComponent<CapsuleCollider>();
-        triggerCollider.isTrigger = true;
-        // 트리거 크기는 Inspector에서 조정
+        
     }
 
     void OnTriggerStay(Collider other)

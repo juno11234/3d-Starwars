@@ -7,12 +7,13 @@ public class EnermyShootSender : StateMachineBehaviour
     [Range(0f, 1f)] public float attackTime = 0f;
     private bool passAttackTime;
 
-    [SerializeField] private Enemy enemy;
+    private Enemy enemy;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         passAttackTime = false;
+        enemy = animator.gameObject.GetComponentInParent<Enemy>();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -21,6 +22,7 @@ public class EnermyShootSender : StateMachineBehaviour
         if (passAttackTime == false && attackTime < stateInfo.normalizedTime)
         {
             enemy.Shoot();
+            passAttackTime = true;
         }
     }
 

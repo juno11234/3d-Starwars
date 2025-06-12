@@ -245,8 +245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2402f2371ea04e44a8924cc5f3997bb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackTime: 0
-  enemy: {fileID: 0}
+  attackTime: 0.55
 --- !u!1102 &-2103179587933487090
 AnimatorState:
   serializedVersion: 6

@@ -21,13 +21,18 @@ public class InputManager : MonoBehaviour
         Cursor.visible = false;
 
         stateMachine = GetComponent<PlayerStateMachine>();
-        
+
         playerActions.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
 
         playerActions.Run.performed += _ => stateMachine.RunInput = true;
         playerActions.Run.canceled += _ => stateMachine.RunInput = false;
 
         playerActions.Jump.performed += _ => stateMachine.JumpInput = true;
+
+        playerActions.Attack.performed += _ => stateMachine.AttackInput = true;
+
+        playerActions.Guard.performed += _ => stateMachine.GuardInput = true;
+        playerActions.Guard.canceled += _ => stateMachine.GuardInput = false;
     }
 
     private void Update()
@@ -38,28 +43,10 @@ public class InputManager : MonoBehaviour
     private void OnEnable()
     {
         input.Enable();
-
-
-        // playerActions.Attack.performed += AttackInput;
-        //
-        // playerActions.Guard.performed += GuardInput;
-        // playerActions.Guard.canceled += GuardCancel;
     }
 
     private void OnDisable()
     {
         input.Disable();
-
-        // playerActions.Move.performed -= MoveInput;
-        //
-        // playerActions.Run.performed -= RunInput;
-        // playerActions.Run.canceled -= RunCancel;
-        //
-        // playerActions.Jump.performed -= JumpInput;
-        //
-        // playerActions.Attack.performed -= AttackInput;
-        //
-        // playerActions.Guard.performed -= GuardCancel;
-        // playerActions.Guard.canceled -= GuardCancel;
     }
 }

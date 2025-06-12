@@ -8,14 +8,23 @@ public class MoveState : IPlayerState
     public MoveState(PlayerStateMachine player) => this.player = player;
 
     public void Enter()
-    {
-        Debug.Log("무브진입");
+    {            
         player.ResetJumpCount();
         player.Animator.SetTrigger("Ground");
     }
 
     public void Input()
     {
+        if (player.AttackInput)
+        {
+            player.ChangeState(new AttackState(player), PlayerStateType.Attack);
+        }
+
+        if (player.GuardInput)
+        {
+            player.ChangeState(new GuardState(player), PlayerStateType.Guard);
+        }
+
         if (player.JumpInput)
         {
             player.ChangeState(new JumpState(player), PlayerStateType.Jump);
@@ -24,6 +33,8 @@ public class MoveState : IPlayerState
 
     public void UpdateLogic()
     {
+        player.UsePortal(player);
+
         float speed = player.RunInput ? player.runSpeed : player.walkSpeed;
         player.MoveCharacter(player.MoveInput, speed);
     }

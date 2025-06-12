@@ -27,6 +27,8 @@ public class AttackState : IPlayerState
 
     public void UpdateLogic()
     {
+        player.UsePortal(player);
+        
         info = player.Animator.GetCurrentAnimatorStateInfo(0);
 
         if ((info.IsName("Attack1") && info.normalizedTime >= 0.95f)

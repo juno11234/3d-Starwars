@@ -3195,6 +3195,7 @@ GameObject:
   - component: {fileID: 5916552866835583071}
   - component: {fileID: 6944703249585560302}
   - component: {fileID: 1914286452083252551}
+  - component: {fileID: 3670204185492386851}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -3283,6 +3284,22 @@ MonoBehaviour:
   maxJumpCount: 2
   jumpCount: 0
   wallJumpHorizontalSpeed: 10
+--- !u!114 &3670204185492386851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4828579324529775786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a844ae265ba21824cbff5a9d71dcfd7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blade: {fileID: 1193478746902024747}
+  stat:
+    hp: 100
+    maxHp: 100
 --- !u!1 &4954732886689421989
 GameObject:
   m_ObjectHideFlags: 0
@@ -6161,7 +6178,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

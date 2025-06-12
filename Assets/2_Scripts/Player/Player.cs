@@ -18,13 +18,14 @@ public class Player : MonoBehaviour, IFighter
     [SerializeField]
     private Blade blade;
 
-    public Collider MainCollider { get; }
+    public Collider MainCollider => controller;
     public GameObject GameObject => gameObject;
 
     public static Player CurrentPlayer;
     public PlayerStat stat;
 
     private CharacterController controller;
+
     private void Awake()
     {
         stat.hp = stat.maxHp;
@@ -41,7 +42,7 @@ public class Player : MonoBehaviour, IFighter
     {
         float duration = 0.3f; // 이동 지속 시간
         float elapsed = 0f;
-        float moveSpeed = 10f; // 앞으로 미는 속도
+        float moveSpeed = 6f; // 앞으로 미는 속도
 
         while (elapsed < duration)
         {

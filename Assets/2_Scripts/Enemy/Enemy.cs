@@ -13,7 +13,6 @@ public class Enemy : MonoBehaviour, IFighter
     {
         public int hp = 100;
         public int maxHp = 100;
-        public int range = 10;
 
         public float viewAngle = 120f;
         public float viewDistance = 10f;
@@ -22,7 +21,7 @@ public class Enemy : MonoBehaviour, IFighter
     [SerializeField] Transform[] patrolPoints;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform firePoint;
-    
+
     public Collider MainCollider => collider;
     public GameObject GameObject => gameObject;
     public EnemyStat stats = new EnemyStat();
@@ -53,7 +52,8 @@ public class Enemy : MonoBehaviour, IFighter
     {
         if (combatMode == false)
         {
-            WhatchPlayer();
+            if (WhatchPlayer()) ChaseStart();
+
             PatrolNextPoint();
         }
         else
@@ -62,13 +62,14 @@ public class Enemy : MonoBehaviour, IFighter
             currentState = animator.GetCurrentAnimatorStateInfo(0);
 
             LookPlayer();
-            if (distance > stats.range)
-            {
-                Chase();
-            }
-            else if (distance < stats.range)
+
+            if (distance < stats.viewDistance && WhatchPlayer())
             {
                 Attack();
+            }
+            else
+            {
+                Chase();
             }
         }
     }
@@ -76,6 +77,10 @@ public class Enemy : MonoBehaviour, IFighter
     private void Patrol()
     {
         if (combatMode) return;
+        if (patrolPoints.Length == 0)
+        {
+            return;
+        }
 
         agent.SetDestination(patrolPoints[destinationIndex].position);
         animator.SetFloat(SPEED, 0.5f);
@@ -85,6 +90,8 @@ public class Enemy : MonoBehaviour, IFighter
 
     private void PatrolNextPoint()
     {
+        if (patrolPoints.Length == 0) return;
+
         if (agent.pathPending == false && agent.remainingDistance < 0.2f && isPatrol)
         {
             if (destinationIndex < patrolPoints.Length - 1)
@@ -110,14 +117,14 @@ public class Enemy : MonoBehaviour, IFighter
         Patrol();
     }
 
-    private void WhatchPlayer()
+    private bool WhatchPlayer()
     {
         Vector3 direction = (Player.CurrentPlayer.transform.position - transform.position);
         float distance = direction.magnitude;
         direction.Normalize();
         float angle = Vector3.Angle(transform.forward, direction);
 
-        if (angle > stats.viewAngle * 0.5f || distance > stats.viewDistance) return;
+        if (angle > stats.viewAngle * 0.5f || distance > stats.viewDistance) return false;
 
         Physics.Raycast(transform.position + Vector3.up, direction, out RaycastHit hit, stats.viewDistance);
 
@@ -126,9 +133,12 @@ public class Enemy : MonoBehaviour, IFighter
         if (hit.collider == Player.CurrentPlayer.MainCollider
             || hit.collider.TryGetComponent(out WallDetector wallDetector))
         {
-            ChaseStart();
+            return true;
         }
+
+        return false;
     }
+
 
     private void ChaseStart()
     {
@@ -141,11 +151,10 @@ public class Enemy : MonoBehaviour, IFighter
 
     private void Chase()
     {
-        if (currentState.IsName("Attack") || currentState.IsName("Shoot")) return;
-
+        if (currentState.IsName("Shoot")) return;
 
         animator.ResetTrigger("Attack");
-
+        animator.SetTrigger("Move");
         agent.isStopped = false;
         animator.SetFloat(SPEED, 1f);
         agent.SetDestination(Player.CurrentPlayer.transform.position);
@@ -169,7 +178,7 @@ public class Enemy : MonoBehaviour, IFighter
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
     }
 
-    public void TakeDamage()
+    public void TakeDamage(CombatEvent combatEvent)
     {
         animator.SetTrigger("Hit");
     }

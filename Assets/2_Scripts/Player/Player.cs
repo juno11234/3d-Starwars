@@ -60,5 +60,5 @@ public class Player : MonoBehaviour, IFighter
         blade.collider.enabled = false;
     }
 
-    public void TakeDamage() { }
+    public void TakeDamage(CombatEvent combatEvent) { }
 }

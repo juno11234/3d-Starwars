@@ -199,7 +199,7 @@ public class Enemy : MonoBehaviour, IFighter
     private void Die()
     {
         die = true;
-        Debug.Log("죽음");
+        agent.isStopped = true;
         animator.SetTrigger("Die");
         
     }

@@ -4744,7 +4744,7 @@ MonoBehaviour:
     hp: 100
     maxHp: 100
     viewAngle: 120
-    viewDistance: 20
+    viewDistance: 15
 --- !u!195 &218212390025706959
 NavMeshAgent:
   m_ObjectHideFlags: 0

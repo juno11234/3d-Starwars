@@ -6,8 +6,8 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public int damage = 10;
-    public float speed = 10f;
-    public float duration = 10f;
+    public float speed = 20f;
+    public float duration = 5f;
     public Enemy enemy;
 
     float currentTime = 0f;

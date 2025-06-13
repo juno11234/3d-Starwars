@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour, IFighter
 
         public float viewAngle = 120f;
         public float viewDistance = 10f;
+        public float range = 30f;
     }
 
     [SerializeField] Transform[] patrolPoints;
@@ -143,6 +144,7 @@ public class Enemy : MonoBehaviour, IFighter
     private void ChaseStart()
     {
         combatMode = true;
+        stats.viewDistance = stats.range;
         animator.SetFloat(SPEED, 1f);
         agent.speed = 9f;
         agent.SetDestination(Player.CurrentPlayer.transform.position);

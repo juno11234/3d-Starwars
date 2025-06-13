@@ -34,6 +34,17 @@ public class Bullet : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Debug.Log("총맞음");
+            
+            CombatEvent e = new CombatEvent();
+            
+            e.Damage = damage;
+            e.Sender = enemy;
+            e.Reciever = Player.CurrentPlayer;
+            e.Collider = other;
+            e.HitPosition = other.ClosestPoint(transform.position);
+            
+            CombatSysytem.Instance.AddInGameEvent(e);
+            
             Destroy(gameObject);
         }
     }

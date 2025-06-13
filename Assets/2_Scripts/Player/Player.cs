@@ -13,22 +13,24 @@ public class Player : MonoBehaviour, IFighter
         public int hp = 100;
         public int maxHp = 100;
     }
-    
-    [SerializeField]
-    private Blade blade;
-    
+
+    [SerializeField] private Blade blade;
+
     public static Player CurrentPlayer;
-    public PlayerStat stat;
+    [FormerlySerializedAs("stat")] public PlayerStat stats;
 
     private CharacterController controller;
 
     public Collider MainCollider => controller;
     public GameObject GameObject => gameObject;
+    public bool OnDie { get; private set; }
+
     private void Awake()
     {
-        stat.hp = stat.maxHp;
+        stats.hp = stats.maxHp;
         CurrentPlayer = this;
         controller = GetComponent<CharacterController>();
+        OnDie = false;
     }
 
     public void AttackCoroutine()
@@ -60,5 +62,18 @@ public class Player : MonoBehaviour, IFighter
         blade.collider.enabled = false;
     }
 
-    public void TakeDamage(CombatEvent combatEvent) { }
+    public void TakeDamage(CombatEvent combatEvent)
+    {
+        stats.hp -= combatEvent.Damage;
+
+        if (stats.hp <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        OnDie = true;
+    }
 }

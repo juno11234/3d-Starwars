@@ -38,7 +38,7 @@ public class CombatSysytem : MonoBehaviour
                     inGameEvent.Reciever.TakeDamage(combatEvent);
                     break;
             }
-            
+
             processCount++;
         }
     }
@@ -50,6 +50,14 @@ public class CombatSysytem : MonoBehaviour
             Debug.Log("몬스터가 이미존재 덮어씀");
         }
     }
-    
-    
+
+    public IFighter GetMonsterOrNull(Collider coll)
+    {
+        return monsterDictionary[coll];
+    }
+
+    public void AddInGameEvent(InGameEvent e)
+    {
+        inGameEventQueue.Enqueue(e);
+    }
 }

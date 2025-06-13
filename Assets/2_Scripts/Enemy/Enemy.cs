@@ -35,25 +35,29 @@ public class Enemy : MonoBehaviour, IFighter
 
     private bool isPatrol;
     private bool combatMode = false;
+    private bool die = false;
 
     private void Awake()
     {
         stats.hp = stats.maxHp;
+        collider = GetComponent<Collider>();
+        animator = GetComponentInChildren<Animator>();
+        agent = GetComponent<NavMeshAgent>();
+        CombatSysytem.Instance.RegisterMonster(this);
     }
 
     private void Start()
     {
-        animator = GetComponentInChildren<Animator>();
-        collider = GetComponent<Collider>();
-        agent = GetComponent<NavMeshAgent>();
         Patrol();
     }
 
     private void Update()
     {
+        if (die) return;
+        
         if (combatMode == false)
         {
-            if (WhatchPlayer()) ChaseStart();
+            if (WhatchPlayer() || stats.hp < stats.maxHp) ChaseStart();
 
             PatrolNextPoint();
         }
@@ -129,8 +133,6 @@ public class Enemy : MonoBehaviour, IFighter
 
         Physics.Raycast(transform.position + Vector3.up, direction, out RaycastHit hit, stats.viewDistance);
 
-        Debug.Log(hit.collider.gameObject.name);
-
         if (hit.collider == Player.CurrentPlayer.MainCollider
             || hit.collider.TryGetComponent(out WallDetector wallDetector))
         {
@@ -182,11 +184,23 @@ public class Enemy : MonoBehaviour, IFighter
 
     public void TakeDamage(CombatEvent combatEvent)
     {
-        animator.SetTrigger("Hit");
+        stats.hp -= combatEvent.Damage;
+
+        if (stats.hp <= 0)
+        {
+            Die();
+        }
+        else
+        {
+            animator.SetTrigger("Hit");
+        }
     }
 
     private void Die()
     {
-        animator.SetTrigger("Death");
+        die = true;
+        Debug.Log("죽음");
+        animator.SetTrigger("Die");
+        
     }
 }

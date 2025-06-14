@@ -11,6 +11,7 @@ public class Bullet : MonoBehaviour
     public Enemy enemy;
 
     float currentTime = 0f;
+    private bool parryBullet = false;
 
     private void OnEnable()
     {
@@ -21,7 +22,15 @@ public class Bullet : MonoBehaviour
 
     private void Update()
     {
-        transform.Translate(transform.forward * (speed * Time.deltaTime), Space.World);
+        if (parryBullet)
+        {
+            transform.Translate(-transform.forward * (speed * Time.deltaTime), Space.World);
+        }
+        else
+        {
+            transform.Translate(transform.forward * (speed * Time.deltaTime), Space.World);
+        }
+
         currentTime += Time.deltaTime;
         if (currentTime >= duration)
         {
@@ -31,20 +40,39 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && Player.CurrentPlayer.IsParrying == false)
         {
-            Debug.Log("총맞음");
-            
             CombatEvent e = new CombatEvent();
-            
+
             e.Damage = damage;
             e.Sender = enemy;
             e.Reciever = Player.CurrentPlayer;
             e.Collider = other;
             e.HitPosition = other.ClosestPoint(transform.position);
-            
+
             CombatSysytem.Instance.AddInGameEvent(e);
-            
+
+            Destroy(gameObject);
+        }
+        else if (other.CompareTag("Player") && Player.CurrentPlayer.IsParrying)
+        {
+            currentTime = 0f;
+            parryBullet = true;
+            damage = 100;
+        }
+
+        if (parryBullet && other.CompareTag("Enemy"))
+        {
+            var monster = CombatSysytem.Instance.GetMonsterOrNull(other);
+            CombatEvent e = new CombatEvent();
+            e.Damage = damage;
+            e.HitPosition = other.ClosestPoint(transform.position);
+            e.Sender = Player.CurrentPlayer;
+            e.Reciever = monster;
+            e.Collider = other;
+
+            CombatSysytem.Instance.AddInGameEvent(e);
+
             Destroy(gameObject);
         }
     }

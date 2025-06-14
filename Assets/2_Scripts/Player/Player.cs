@@ -20,16 +20,20 @@ public class Player : MonoBehaviour, IFighter
     [FormerlySerializedAs("stat")] public PlayerStat stats;
 
     private CharacterController controller;
+    private Animator animator;
 
     public Collider MainCollider => controller;
     public GameObject GameObject => gameObject;
     public bool OnDie { get; private set; }
+    public bool IsGuarding { get; private set; }
+    public bool IsParrying { get; private set; }
 
     private void Awake()
     {
         stats.hp = stats.maxHp;
         CurrentPlayer = this;
         controller = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
         OnDie = false;
     }
 
@@ -64,6 +68,8 @@ public class Player : MonoBehaviour, IFighter
 
     public void TakeDamage(CombatEvent combatEvent)
     {
+        if (IsGuarding) return;
+
         stats.hp -= combatEvent.Damage;
 
         if (stats.hp <= 0)
@@ -75,5 +81,26 @@ public class Player : MonoBehaviour, IFighter
     private void Die()
     {
         OnDie = true;
+        animator.SetTrigger("Die");
+    }
+
+    public void Guard()
+    {
+        IsGuarding = true;
+    }
+
+    public void GuardCancel()
+    {
+        IsGuarding = false;
+    }
+
+    public void Parry()
+    {
+        IsParrying = true;
+    }
+
+    public void ParryCancel()
+    {
+        IsParrying = false;
     }
 }

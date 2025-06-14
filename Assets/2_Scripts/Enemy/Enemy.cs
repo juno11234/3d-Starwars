@@ -43,18 +43,18 @@ public class Enemy : MonoBehaviour, IFighter
         collider = GetComponent<Collider>();
         animator = GetComponentInChildren<Animator>();
         agent = GetComponent<NavMeshAgent>();
-        CombatSysytem.Instance.RegisterMonster(this);
     }
 
     private void Start()
     {
+        CombatSysytem.Instance.RegisterMonster(this);
         Patrol();
     }
 
     private void Update()
     {
         if (die) return;
-        
+
         if (combatMode == false)
         {
             if (WhatchPlayer() || stats.hp < stats.maxHp) ChaseStart();
@@ -184,6 +184,8 @@ public class Enemy : MonoBehaviour, IFighter
 
     public void TakeDamage(CombatEvent combatEvent)
     {
+        if (die) return;
+        
         stats.hp -= combatEvent.Damage;
 
         if (stats.hp <= 0)
@@ -201,6 +203,5 @@ public class Enemy : MonoBehaviour, IFighter
         die = true;
         agent.isStopped = true;
         animator.SetTrigger("Die");
-        
     }
 }

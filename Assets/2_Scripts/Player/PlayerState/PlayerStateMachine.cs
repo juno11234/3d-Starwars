@@ -12,7 +12,7 @@ public enum PlayerStateType
     WallJump,
     Sliding,
     Flying,
-    
+
     Attack,
     Guard,
 }
@@ -31,6 +31,7 @@ public class PlayerStateMachine : MonoBehaviour
     public bool AttackInput { get; set; }
     public bool GuardInput { get; set; }
     public bool FlyingInput { get; set; }
+    public bool DodgeInput { get; set; }
 
     //외부참조용
     public CharacterController Controller => controller;
@@ -181,7 +182,7 @@ public class PlayerStateMachine : MonoBehaviour
         rotationRestoreDuration = duration;
         rotationRestoreTimer = 0f;
     }
-   
+
     public void UsePortal(PlayerStateMachine player) //활공상태
     {
         if (FlyingInput == false) return;
@@ -191,4 +192,5 @@ public class PlayerStateMachine : MonoBehaviour
         gravity = 0f;
         FlyingInput = false;
     }
+    
 }

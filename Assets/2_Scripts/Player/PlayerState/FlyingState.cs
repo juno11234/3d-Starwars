@@ -8,6 +8,7 @@ public class FlyingState : IPlayerState
     private List<Transform> waypoints;
     private int index;
     private float flySpeed = 20f;
+    private bool thisTimeLook=false;
 
     public FlyingState(PlayerStateMachine player, List<Transform> waypoints)
     {
@@ -28,19 +29,29 @@ public class FlyingState : IPlayerState
     {
         if (waypoints == null || waypoints.Count == 0) return;
         Transform target = waypoints[index];
-        Vector3 dir = (target.position - player.transform.position).normalized;
+        Transform before = player.transform;
+        Vector3 dir = (target.position - before.position).normalized;
 
         player.Controller.Move(dir * (flySpeed * Time.deltaTime));
 
-        player.Model.rotation =
-            Quaternion.Slerp(player.Model.rotation, Quaternion.LookRotation(dir), 5f * Time.deltaTime);
+        Look(dir);
 
         if (Vector3.Distance(player.transform.position, target.position) < 0.2f)
         {
+            before = target;
             index++;
+            thisTimeLook = true;
             if (index >= waypoints.Count)
                 player.ChangeState(new JumpState(player), PlayerStateType.Jump);
         }
+    }
+
+    private void Look(Vector3 dir)
+    {
+        if(thisTimeLook) return;
+        player.Model.rotation =
+            Quaternion.Slerp(player.Model.rotation, Quaternion.LookRotation(dir), 5f * Time.deltaTime);
+        thisTimeLook = true;
     }
 
     public void Exit()

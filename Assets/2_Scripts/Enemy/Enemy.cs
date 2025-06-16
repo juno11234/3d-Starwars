@@ -133,13 +133,15 @@ public class Enemy : MonoBehaviour, IFighter
 
         Physics.Raycast(transform.position + Vector3.up, direction, out RaycastHit hit, stats.viewDistance);
 
-        if (hit.collider == Player.CurrentPlayer.MainCollider
+            if (hit.collider == Player.CurrentPlayer.MainCollider
             || hit.collider.TryGetComponent(out WallDetector wallDetector))
         {
             return true;
         }
-
-        return false;
+        else
+        {
+            return false;
+        }
     }
 
 
@@ -202,6 +204,7 @@ public class Enemy : MonoBehaviour, IFighter
     {
         die = true;
         agent.isStopped = true;
+        collider.enabled = false;
         animator.SetTrigger("Die");
     }
 }

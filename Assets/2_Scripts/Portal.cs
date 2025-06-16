@@ -13,7 +13,7 @@ public class Portal : MonoBehaviour
         {
             var player = other.GetComponent<PlayerStateMachine>();
             player.waypoints = waypoints;
-            player.FlyingInput = true;
+            player.FlyingTrigger = true;
         }
     }
 }

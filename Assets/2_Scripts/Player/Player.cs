@@ -17,7 +17,7 @@ public class Player : MonoBehaviour, IFighter
     [SerializeField] private Blade blade;
 
     public static Player CurrentPlayer;
-    [FormerlySerializedAs("stat")] public PlayerStat stats;
+    public PlayerStat stats;
 
     private CharacterController controller;
     private Animator animator;

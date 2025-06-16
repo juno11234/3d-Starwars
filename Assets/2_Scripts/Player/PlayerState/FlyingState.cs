@@ -19,6 +19,7 @@ public class FlyingState : IPlayerState
     {
         player.Animator.SetTrigger("Flying");
         player.jumpCount = 0;
+        player.WarpSpeedLine.SetActive(true);
     }
 
     public void Input() { }
@@ -28,12 +29,12 @@ public class FlyingState : IPlayerState
         if (waypoints == null || waypoints.Count == 0) return;
         Transform target = waypoints[index];
         Vector3 dir = (target.position - player.transform.position).normalized;
-        
+
         player.Controller.Move(dir * (flySpeed * Time.deltaTime));
-        
+
         player.Model.rotation =
             Quaternion.Slerp(player.Model.rotation, Quaternion.LookRotation(dir), 5f * Time.deltaTime);
-        
+
         if (Vector3.Distance(player.transform.position, target.position) < 0.2f)
         {
             index++;
@@ -45,5 +46,6 @@ public class FlyingState : IPlayerState
     public void Exit()
     {
         player.StopWallRun_Or_Flying();
+        player.WarpSpeedLine.SetActive(false);
     }
 }

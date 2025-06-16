@@ -226,7 +226,7 @@ public class PlayerStateMachine : MonoBehaviour
         float x = MoveInput.x;
         Vector3 right = slidingTransform.right;
         right.y = 0;
-        Vector3 move = right.normalized * (x * slidingSpeed * Time.deltaTime);
+        Vector3 move = right.normalized * (x * runSpeed * Time.deltaTime);
         controller.Move(move);
     }
 }

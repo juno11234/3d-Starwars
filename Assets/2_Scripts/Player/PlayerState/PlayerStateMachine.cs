@@ -98,6 +98,10 @@ public class PlayerStateMachine : MonoBehaviour
         }
 
         velocity.y += gravity * Time.deltaTime;
+        if (velocity.y < gravity)
+        {
+            velocity.y = gravity;
+        }
         controller.Move(velocity * Time.deltaTime);
 
         JumpInput = false;

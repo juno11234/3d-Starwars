@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Portal : MonoBehaviour
 {
+    [SerializeField] FlyCameraShakeTrigger flyCameraShakeTrigger;
     [SerializeField] List<Transform> waypoints;
     private bool activated = false;
 
@@ -12,6 +13,7 @@ public class Portal : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            flyCameraShakeTrigger.Shake();
             activated = true;
             var player = other.GetComponent<PlayerStateMachine>();
             player.waypoints = waypoints;

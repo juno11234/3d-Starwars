@@ -8,9 +8,19 @@ using UnityEngine.Serialization;
 public class TimeLineTrigger : MonoBehaviour
 {
     [SerializeField] private PlayableDirector timeLine;
+    private Collider collider;
+
+    private void Awake()
+    {
+        collider = GetComponent<Collider>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        timeLine.Play();
+        if (other.CompareTag("Player"))
+        {
+            timeLine.Play();
+            collider.enabled = false;
+        }
     }
 }

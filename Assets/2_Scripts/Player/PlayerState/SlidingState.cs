@@ -26,6 +26,7 @@ public class SlidingState : IPlayerState
 
     public void UpdateLogic()
     {
+        player.UsePortal(player);
         if (player.SlidingTrigger == false)
         {
             player.ChangeState(new JumpState(player), PlayerStateType.Sliding);

@@ -33,6 +33,7 @@ public class MoveState : IPlayerState
 
     public void UpdateLogic()
     {
+        player.UseSlide(player);
         player.UsePortal(player);
 
         float speed = player.RunInput ? player.runSpeed : player.walkSpeed;

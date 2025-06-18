@@ -4736,18 +4736,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6800f4759ba5edb4488204818196d38a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrolPoints:
-  - {fileID: 0}
-  - {fileID: 0}
+  patrolPoints: []
   bulletPrefab: {fileID: 4590201257316147847, guid: 995bdab202542d144a515787508dd436,
     type: 3}
   firePoint: {fileID: 8268372191902586543}
   stats:
     hp: 100
     maxHp: 100
-    range: 10
     viewAngle: 120
-    viewDistance: 10
+    viewDistance: 15
 --- !u!195 &218212390025706959
 NavMeshAgent:
   m_ObjectHideFlags: 0

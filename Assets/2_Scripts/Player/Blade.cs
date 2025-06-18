@@ -7,6 +7,8 @@ public class Blade : MonoBehaviour
 {
     [HideInInspector] public Collider collider;
 
+    [SerializeField] private int damage = 35;
+
     private void Awake()
     {
         collider = GetComponent<Collider>();
@@ -21,7 +23,15 @@ public class Blade : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            Debug.Log(other.gameObject.name + " HIT");
+            var monster = CombatSysytem.Instance.GetMonsterOrNull(other);
+            CombatEvent e = new CombatEvent();
+            e.Damage = damage;
+            e.HitPosition = other.ClosestPoint(transform.position);
+            e.Sender = Player.CurrentPlayer;
+            e.Reciever = monster;
+            e.Collider = other;
+
+            CombatSysytem.Instance.AddInGameEvent(e);
         }
     }
 }

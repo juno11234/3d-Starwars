@@ -12,7 +12,7 @@ public enum PlayerStateType
     WallJump,
     Sliding,
     Flying,
-    
+
     Attack,
     Guard,
 }
@@ -30,29 +30,40 @@ public class PlayerStateMachine : MonoBehaviour
     public bool JumpInput { get; set; }
     public bool AttackInput { get; set; }
     public bool GuardInput { get; set; }
-    public bool FlyingInput { get; set; }
+    public bool DodgeInput { get; set; }
 
-    //외부참조용
+    public bool FlyingTrigger { get; set; }
+    public bool SlidingTrigger { get; set; }
+
+    //외부 참조용
     public CharacterController Controller => controller;
     public Animator Animator => animator;
     public WallDetector WallDetector => wallDetector;
     public Transform Model => model;
     public Vector3 Velocity => velocity;
     public List<Transform> waypoints;
+    public Transform SlidingTransform => slidingTransform;
+    public GameObject WarpSpeedLine => warpSpeedLine;
+    public GameObject SlidingSpeedLine => slidingSpeedLine;
 
-    [Header("참조")] [SerializeField] private CharacterController controller;
-    [SerializeField] private Transform cam;
-    [SerializeField] private Transform model;
-    [SerializeField] private Animator animator;
+    [Header("참조")] [SerializeField] private Animator animator;
     [SerializeField] private WallDetector wallDetector;
+    [SerializeField] private GameObject warpSpeedLine;
+    [SerializeField] private GameObject slidingSpeedLine;
+    public Transform slidingTransform;
+
 
     [Header("스탯")] public float walkSpeed = 5f;
     public float runSpeed = 9f;
     public float jumpHeight = 3f;
     public float gravity = -9.81f;
     public int maxJumpCount = 2;
+    public float slidingSpeed = 50f;
 
     [HideInInspector] public int jumpCount = 0;
+    private CharacterController controller;
+    private Transform cam;
+    private Transform model;
     private Vector3 velocity;
     private Vector3 currentWallNormal;
     private Vector3 originalControllerCenter;
@@ -60,12 +71,16 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void Awake()
     {
-        controller = controller ?? GetComponent<CharacterController>();
+        cam = Camera.main.transform;
+        model = transform;
+        controller = GetComponent<CharacterController>();
         originalControllerCenter = controller.center;
     }
 
     private void Start()
     {
+        slidingSpeedLine.SetActive(false);
+        warpSpeedLine.SetActive(false);
         ChangeState(new MoveState(this), PlayerStateType.Move);
     }
 
@@ -83,6 +98,10 @@ public class PlayerStateMachine : MonoBehaviour
         }
 
         velocity.y += gravity * Time.deltaTime;
+        if (velocity.y < gravity)
+        {
+            velocity.y = gravity;
+        }
         controller.Move(velocity * Time.deltaTime);
 
         JumpInput = false;
@@ -99,6 +118,12 @@ public class PlayerStateMachine : MonoBehaviour
 
     public void MoveCharacter(Vector2 input, float speed) //이동 로직
     {
+        if (SlidingTrigger)
+        {
+            Animator.SetFloat("Speed", 0f);
+            return;
+        }
+
         Vector3 forward = cam.forward;
         Vector3 right = cam.right;
         forward.y = 0;
@@ -181,14 +206,31 @@ public class PlayerStateMachine : MonoBehaviour
         rotationRestoreDuration = duration;
         rotationRestoreTimer = 0f;
     }
-   
+
     public void UsePortal(PlayerStateMachine player) //활공상태
     {
-        if (FlyingInput == false) return;
+        if (FlyingTrigger == false) return;
         ChangeState(new FlyingState(player, waypoints), PlayerStateType.Flying);
 
         velocity = Vector3.zero;
         gravity = 0f;
-        FlyingInput = false;
+        FlyingTrigger = false;
+    }
+
+    public void UseSlide(PlayerStateMachine player)
+    {
+        if (SlidingTrigger)
+        {
+            ChangeState(new SlidingState(player), PlayerStateType.Sliding);
+        }
+    }
+
+    public void SlidingMove()
+    {
+        float x = MoveInput.x;
+        Vector3 right = slidingTransform.right;
+        right.y = 0;
+        Vector3 move = right.normalized * (x * runSpeed * Time.deltaTime);
+        controller.Move(move);
     }
 }

@@ -144,6 +144,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dodge"",
+                    ""type"": ""Button"",
+                    ""id"": ""c32287cb-fc15-468c-94b7-2e00cf765100"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -256,6 +265,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Guard"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e60de362-07f6-4643-9215-479986d74d67"",
+                    ""path"": ""<Keyboard>/leftAlt"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dodge"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -270,6 +290,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_Guard = m_Player.FindAction("Guard", throwIfNotFound: true);
+        m_Player_Dodge = m_Player.FindAction("Dodge", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
@@ -356,6 +377,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_Guard;
+    private readonly InputAction m_Player_Dodge;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -391,6 +413,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Guard".
         /// </summary>
         public InputAction @Guard => m_Wrapper.m_Player_Guard;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Dodge".
+        /// </summary>
+        public InputAction @Dodge => m_Wrapper.m_Player_Dodge;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -435,6 +461,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Guard.started += instance.OnGuard;
             @Guard.performed += instance.OnGuard;
             @Guard.canceled += instance.OnGuard;
+            @Dodge.started += instance.OnDodge;
+            @Dodge.performed += instance.OnDodge;
+            @Dodge.canceled += instance.OnDodge;
         }
 
         /// <summary>
@@ -464,6 +493,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Guard.started -= instance.OnGuard;
             @Guard.performed -= instance.OnGuard;
             @Guard.canceled -= instance.OnGuard;
+            @Dodge.started -= instance.OnDodge;
+            @Dodge.performed -= instance.OnDodge;
+            @Dodge.canceled -= instance.OnDodge;
         }
 
         /// <summary>
@@ -546,5 +578,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnGuard(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Dodge" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDodge(InputAction.CallbackContext context);
     }
 }

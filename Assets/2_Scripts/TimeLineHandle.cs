@@ -1,0 +1,41 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class TimeLineHandle : MonoBehaviour
+{
+    [SerializeField] private InputManager playerInput;
+    [SerializeField] private GameObject freeLookCam;
+    [SerializeField] private GameObject portalManager;
+
+    public void InputEnable()
+    {
+        playerInput.enabled = true;
+    }
+
+    public void InputDisable()
+    {
+        playerInput.enabled = false;
+    }
+
+    public void CamEnable()
+    {
+        freeLookCam.SetActive(true);
+    }
+
+    public void CamDisable()
+    {
+        freeLookCam.SetActive(false);
+    }
+
+    public void PortalEnable()
+    {
+        portalManager.SetActive(true);
+    }
+
+    public void PortalDisable()
+    {
+        portalManager.SetActive(false);
+    }
+}

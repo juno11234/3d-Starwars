@@ -28,12 +28,16 @@ public class MiddleBossStateMachine : MonoBehaviour, IFighter
         public float skillCool = 15f;
     }
 
+    [SerializeField] private GameObject warningParticle;
+    [SerializeField] private MiddleDashAttackColl dashAttackColl;
     public BossStat stat;
 
     public Collider MainCollider => collider;
     public GameObject GameObject => gameObject;
     public Animator Animator => animator;
     public NavMeshAgent Agent => agent;
+    public GameObject WarnigParticle => warningParticle;
+    public MiddleDashAttackColl DashAttackColl => dashAttackColl;
 
     private Collider collider;
     private Animator animator;
@@ -47,6 +51,8 @@ public class MiddleBossStateMachine : MonoBehaviour, IFighter
         collider = GetComponent<Collider>();
         stat.hp = stat.maxHp;
         animator = GetComponentInChildren<Animator>();
+        warningParticle.SetActive(false);
+        dashAttackColl.gameObject.SetActive(false);
     }
 
     void Start()
@@ -93,6 +99,7 @@ public class MiddleBossStateMachine : MonoBehaviour, IFighter
                 skillStateType = MiddleBossStateType.PulseAttack;
             }
 
+            warningParticle.SetActive(true);
             ChangeState(skillState, skillStateType);
         }
     }

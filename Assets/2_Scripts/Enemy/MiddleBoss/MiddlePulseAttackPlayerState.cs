@@ -19,10 +19,16 @@ public class MiddlePulseAttackPlayerState : IBossState
     public void UpdateLogic()
     {
         var info = boss.Animator.GetCurrentAnimatorStateInfo(0);
+        
         if (info.IsName("JumpAttack") && info.normalizedTime >= 0.9f)
         {
             boss.ChangeState(new MiddleChasePlayerState(boss), MiddleBossStateType.Chasing);
         }
+        boss.LookPlayer();
     }
-    public void Exit() { }
+
+    public void Exit()
+    {
+        boss.WarnigParticle.SetActive(false);
+    }
 }

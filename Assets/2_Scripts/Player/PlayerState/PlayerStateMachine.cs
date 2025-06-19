@@ -22,7 +22,7 @@ public class PlayerStateMachine : MonoBehaviour
 {
     //상태전환과 상태별 로직
     public PlayerStateType CurrentStateType { get; private set; }
-    private IPlayerState currentState;
+    private IPlayerState currentPlayerState;
 
     //입력 받아오는 프로퍼티들
     public Vector2 MoveInput { get; set; }
@@ -34,7 +34,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     public bool FlyingTrigger { get; set; }
     public bool SlidingTrigger { get; set; }
-
+    
     //외부 참조용
     public CharacterController Controller => controller;
     public Animator Animator => animator;
@@ -81,13 +81,13 @@ public class PlayerStateMachine : MonoBehaviour
     {
         slidingSpeedLine.SetActive(false);
         warpSpeedLine.SetActive(false);
-        ChangeState(new MoveState(this), PlayerStateType.Move);
+        ChangeState(new MovePlayerState(this), PlayerStateType.Move);
     }
 
     private void Update()
     {
-        currentState.Input();
-        currentState.UpdateLogic();
+        currentPlayerState.Input();
+        currentPlayerState.UpdateLogic();
 
         if (isRestoringRotation)
         {
@@ -108,12 +108,12 @@ public class PlayerStateMachine : MonoBehaviour
         AttackInput = false;
     }
 
-    public void ChangeState(IPlayerState newState, PlayerStateType newStateType) //상태전환 로직
+    public void ChangeState(IPlayerState newPlayerState, PlayerStateType newStateType) //상태전환 로직
     {
-        currentState?.Exit();
-        currentState = newState;
+        currentPlayerState?.Exit();
+        currentPlayerState = newPlayerState;
         CurrentStateType = newStateType;
-        currentState?.Enter();
+        currentPlayerState?.Enter();
     }
 
     public void MoveCharacter(Vector2 input, float speed) //이동 로직
@@ -210,7 +210,7 @@ public class PlayerStateMachine : MonoBehaviour
     public void UsePortal(PlayerStateMachine player) //활공상태
     {
         if (FlyingTrigger == false) return;
-        ChangeState(new FlyingState(player, waypoints), PlayerStateType.Flying);
+        ChangeState(new FlyingPlayerState(player, waypoints), PlayerStateType.Flying);
 
         velocity = Vector3.zero;
         gravity = 0f;
@@ -221,7 +221,7 @@ public class PlayerStateMachine : MonoBehaviour
     {
         if (SlidingTrigger)
         {
-            ChangeState(new SlidingState(player), PlayerStateType.Sliding);
+            ChangeState(new SlidingPlayerState(player), PlayerStateType.Sliding);
         }
     }
 

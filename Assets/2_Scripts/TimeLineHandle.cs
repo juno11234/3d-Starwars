@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class TimeLineHandle : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class TimeLineHandle : MonoBehaviour
     [SerializeField] private GameObject freeLookCam;
     [SerializeField] private GameObject portalManager;
 
+    [SerializeField] private float slowSpeed=0.2f;
     public void InputEnable()
     {
         playerInput.enabled = true;
@@ -37,5 +39,15 @@ public class TimeLineHandle : MonoBehaviour
     public void PortalDisable()
     {
         portalManager.SetActive(false);
+    }
+
+    public void TimeLineSlow(PlayableDirector director)
+    {
+        director.playableGraph.GetRootPlayable(0).SetSpeed(slowSpeed);
+    }
+
+    public void TimeLineSlowCancel(PlayableDirector director)
+    {
+        director.playableGraph.GetRootPlayable(0).SetSpeed(1f);
     }
 }

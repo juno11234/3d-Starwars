@@ -19,13 +19,13 @@ public class KnockbackPlayerState : IPlayerState
     public void Enter()
     {
         player.Animator.SetBool("Knockback", true);
+        player.Controller.enabled = false;
     }
 
     public void Input() { }
 
     public void UpdateLogic()
     {
-        player.Controller.Move(knockbackDir * (knockbakcPower * Time.deltaTime));
 
         timer += Time.deltaTime;
         if (timer > knockbackTime)
@@ -37,5 +37,6 @@ public class KnockbackPlayerState : IPlayerState
     public void Exit()
     {
         player.Animator.SetBool("Knockback", false);
+        player.Controller.enabled = true;
     }
 }

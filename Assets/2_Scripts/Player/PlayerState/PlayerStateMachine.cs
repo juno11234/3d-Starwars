@@ -93,6 +93,8 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void Update()
     {
+        if (Player.CurrentPlayer.OnDie) return;
+        
         currentPlayerState.Input();
         currentPlayerState.UpdateLogic();
 
@@ -244,7 +246,6 @@ public class PlayerStateMachine : MonoBehaviour
     public void CalculateKnockback(Vector3 hitPoint)
     {
         Vector3 direction = (transform.position - hitPoint).normalized;
-        velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         ChangeState(new KnockbackPlayerState(this, direction), PlayerStateType.Knockback);
     }
 }

@@ -37,6 +37,8 @@ public class Middle_BossPulse : MonoBehaviour
         {
             Player.CurrentPlayer.GuardBreak();
             
+            KnockbackClass.KnockbackFunc.Invoke(other.ClosestPoint(transform.position));
+            
             CombatEvent e = new CombatEvent();
 
             e.Damage = damage;

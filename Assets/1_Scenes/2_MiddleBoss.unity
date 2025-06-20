@@ -1205,6 +1205,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3627833198859493009, guid: 8430a829ff6917e4e9471159f52b8765,
+        type: 3}
+      propertyPath: stat.skillCool
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7146096106125788332, guid: 8430a829ff6917e4e9471159f52b8765,
         type: 3}
       propertyPath: m_Name

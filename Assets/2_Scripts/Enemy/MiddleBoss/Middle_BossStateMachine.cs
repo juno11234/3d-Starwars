@@ -68,17 +68,12 @@ public class Middle_BossStateMachine : MonoBehaviour, IFighter
         CombatSysytem.Instance.RegisterMonster(this);
         ChangeState(new Middle_ChaseState(this), MiddleBossStateType.Chasing);
         coolTimer = 0f;
-        
     }
 
     void Update()
     {
         currentState.UpdateLogic();
         coolTimer += Time.deltaTime;
-        if (coolTimer >= stat.skillCool)
-        {
-            coolTimer = stat.skillCool;
-        }
     }
 
     public void ChangeState(IBossState newPlayerState, MiddleBossStateType newStateType)
@@ -91,7 +86,7 @@ public class Middle_BossStateMachine : MonoBehaviour, IFighter
 
     public void UseSkill()
     {
-        if (Mathf.Approximately(coolTimer, stat.skillCool))
+        if ((coolTimer >= stat.skillCool))
         {
             coolTimer = 0f;
             IBossState skillState;
@@ -107,8 +102,7 @@ public class Middle_BossStateMachine : MonoBehaviour, IFighter
                 skillState = new Middle_PulseAttackState(this);
                 skillStateType = MiddleBossStateType.PulseAttack;
             }
-
-            warningParticle.SetActive(true);
+            
             ChangeState(skillState, skillStateType);
         }
     }

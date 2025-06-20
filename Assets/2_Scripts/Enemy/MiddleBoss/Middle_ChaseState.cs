@@ -21,7 +21,9 @@ public class Middle_ChaseState : IBossState
     public void UpdateLogic()
     {
         boss.LookPlayer();
+        
         boss.UseSkill();
+        
         float distance = Vector3.Distance(Player.CurrentPlayer.transform.position, boss.transform.position);
 
         if (distance < range)

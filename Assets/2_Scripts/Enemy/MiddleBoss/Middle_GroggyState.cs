@@ -5,7 +5,7 @@ using UnityEngine;
 public class Middle_GroggyState : IBossState
 {
     private Middle_BossStateMachine boss;
-    private float groggyTime = 5f;
+    private float groggyTime = 4f;
     private float timer = 0f;
 
     public Middle_GroggyState(Middle_BossStateMachine boss)

@@ -13,6 +13,7 @@ public class Middle_PulseAttackState : IBossState
 
     public void Enter()
     {
+        boss.WarnigParticle.SetActive(true);
         boss.Animator.SetTrigger("JumpAttack");
     }
 

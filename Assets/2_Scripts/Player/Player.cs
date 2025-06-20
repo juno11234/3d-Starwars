@@ -128,4 +128,5 @@ public class Player : MonoBehaviour, IFighter
     {
         IsParrying = false;
     }
+    
 }

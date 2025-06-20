@@ -18,7 +18,7 @@ public class Middle_DashAttackState : IBossState
         boss.Animator.SetBool("DashAttack", true);
         direction = boss.transform.forward;
         boss.DashAttackColl.gameObject.SetActive(true);
-       
+        boss.WarnigParticle.SetActive(true);
     }
 
     public void UpdateLogic()
@@ -29,6 +29,7 @@ public class Middle_DashAttackState : IBossState
         boss.transform.Translate(direction * (speed * Time.deltaTime), Space.World);
         if (boss.DashAttackColl.CrashWall)
         {
+            BossCameraShakeTrigger.Instance.Shake();
             boss.ChangeState(new Middle_GroggyState(boss), MiddleBossStateType.Groggy);
         }
     }

@@ -11,8 +11,10 @@ public class BossCameraShakeTrigger : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
         impulseSource = GetComponent<CinemachineImpulseSource>();
     }
+
     public void Shake()
     {
         impulseSource.GenerateImpulse(power);

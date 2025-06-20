@@ -15171,7 +15171,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2918681732148695292}
   serializedVersion: 8
-  lengthInSec: 2
+  lengthInSec: 3
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 1
@@ -15246,7 +15246,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.4
+      scalar: 2
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -45382,7 +45382,7 @@ MonoBehaviour:
   stat:
     hp: 300
     maxHp: 300
-    skillCool: 5
+    skillCool: 4
 --- !u!195 &6718958749982101156
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -45393,7 +45393,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1.17
-  m_Speed: 5
+  m_Speed: 4
   m_Acceleration: 2000
   avoidancePriority: 50
   m_AngularSpeed: 2000
@@ -50326,7 +50326,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7276532308616524211}
   serializedVersion: 8
-  lengthInSec: 2
+  lengthInSec: 3
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 1
@@ -50401,7 +50401,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.5
+      scalar: 2
       minScalar: 5
       maxCurve:
         serializedVersion: 2

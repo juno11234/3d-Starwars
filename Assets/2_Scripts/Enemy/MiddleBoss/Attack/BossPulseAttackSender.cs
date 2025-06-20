@@ -22,6 +22,7 @@ public class BossPulseAttackSender : StateMachineBehaviour
         if (passAttackTime == false && attackTime < stateInfo.normalizedTime)
         {
             boss.PulsePattern();
+            BossCameraShakeTrigger.Instance.Shake();
             passAttackTime = true;
         }
     }

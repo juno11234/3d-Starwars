@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DodgePlayerState : IPlayerState
+public class KnockbackPlayerState : IPlayerState
 {
     private PlayerStateMachine player;
 
-    public DodgePlayerState(PlayerStateMachine player)
+    public KnockbackPlayerState(PlayerStateMachine player)
     {
         this.player = player;
     }

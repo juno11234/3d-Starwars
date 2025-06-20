@@ -27,6 +27,8 @@ public class Middle_DashAttackColl : MonoBehaviour
         {
             Player.CurrentPlayer.GuardBreak();
             
+            
+            KnockbackClass.KnockbackFunc.Invoke(other.ClosestPoint(transform.position));
             CombatEvent e = new CombatEvent();
             e.Reciever = Player.CurrentPlayer;
             e.Sender = boss;

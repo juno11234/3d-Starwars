@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/1_Scenes/FinalBoss.unity
+    path: Assets/1_Scenes/3_FinalBoss.unity
     guid: 4c796228862296442873366f7dbc66ce
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 0080f10fa8f3d7645883ffa7f095ef2d,

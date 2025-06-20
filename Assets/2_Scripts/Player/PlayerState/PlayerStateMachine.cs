@@ -15,6 +15,12 @@ public enum PlayerStateType
 
     Attack,
     Guard,
+    Knockback,
+}
+
+public static class KnockbackClass
+{
+    public static Action<Vector3> KnockbackFunc;
 }
 
 [RequireComponent(typeof(CharacterController))]
@@ -34,7 +40,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     public bool FlyingTrigger { get; set; }
     public bool SlidingTrigger { get; set; }
-    
+
     //외부 참조용
     public CharacterController Controller => controller;
     public Animator Animator => animator;
@@ -75,6 +81,7 @@ public class PlayerStateMachine : MonoBehaviour
         model = transform;
         controller = GetComponent<CharacterController>();
         originalControllerCenter = controller.center;
+        KnockbackClass.KnockbackFunc = CalculateKnockback;
     }
 
     private void Start()
@@ -102,6 +109,7 @@ public class PlayerStateMachine : MonoBehaviour
         {
             velocity.y = gravity;
         }
+
         controller.Move(velocity * Time.deltaTime);
 
         JumpInput = false;
@@ -163,7 +171,6 @@ public class PlayerStateMachine : MonoBehaviour
         return;
     }
 
-
     public void ResetJumpCount() //점프 횟수 초기화
     {
         jumpCount = 0;
@@ -224,6 +231,7 @@ public class PlayerStateMachine : MonoBehaviour
             ChangeState(new SlidingPlayerState(player), PlayerStateType.Sliding);
         }
     }
+
     public void SlidingMove()
     {
         float x = MoveInput.x;
@@ -231,5 +239,12 @@ public class PlayerStateMachine : MonoBehaviour
         right.y = 0;
         Vector3 move = right.normalized * (x * runSpeed * Time.deltaTime);
         controller.Move(move);
+    }
+
+    public void CalculateKnockback(Vector3 hitPoint)
+    {
+        Vector3 direction = (transform.position - hitPoint).normalized;
+        velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        ChangeState(new KnockbackPlayerState(this, direction), PlayerStateType.Knockback);
     }
 }

@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MiddleDashAttackPlayerState : IBossState
+public class Middle_DashAttackState : IBossState
 {
-    private MiddleBossStateMachine boss;
+    private Middle_BossStateMachine boss;
     private float speed = 10f;
     Vector3 direction;
 
-    public MiddleDashAttackPlayerState(MiddleBossStateMachine boss)
+    public Middle_DashAttackState(Middle_BossStateMachine boss)
     {
         this.boss = boss;
     }
@@ -18,6 +18,7 @@ public class MiddleDashAttackPlayerState : IBossState
         boss.Animator.SetBool("DashAttack", true);
         direction = boss.transform.forward;
         boss.DashAttackColl.gameObject.SetActive(true);
+       
     }
 
     public void UpdateLogic()
@@ -28,7 +29,7 @@ public class MiddleDashAttackPlayerState : IBossState
         boss.transform.Translate(direction * (speed * Time.deltaTime), Space.World);
         if (boss.DashAttackColl.CrashWall)
         {
-            boss.ChangeState(new MiddleChasePlayerState(boss), MiddleBossStateType.Chasing);
+            boss.ChangeState(new Middle_GroggyState(boss), MiddleBossStateType.Groggy);
         }
     }
 

@@ -5,7 +5,8 @@ using UnityEngine;
 public class GuardPlayerState : IPlayerState
 {
     private PlayerStateMachine player;
-
+    private float parryTime = 0.5f;
+    private float timer = 0f;
 
     public GuardPlayerState(PlayerStateMachine player)
     {
@@ -14,25 +15,21 @@ public class GuardPlayerState : IPlayerState
 
     public void Enter()
     {
+        timer = 0f;
         player.Animator.SetBool("Guard", true);
         Player.CurrentPlayer.Guard();
-        
+        Player.CurrentPlayer.Parry();
     }
 
     public void Input() { }
 
     public void UpdateLogic()
     {
+        timer += Time.deltaTime;
+        
+        if (timer >= parryTime) Player.CurrentPlayer.ParryCancel();
+        
         var info = player.Animator.GetCurrentAnimatorStateInfo(0);
-
-        if (info.IsName("Parry") )
-        {
-            Player.CurrentPlayer.Parry();
-        }
-        else
-        {
-            Player.CurrentPlayer.ParryCancel();
-        }
 
         if (player.GuardInput == false)
         {

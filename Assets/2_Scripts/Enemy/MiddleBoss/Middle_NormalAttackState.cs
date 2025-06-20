@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MiddleNormalAttackPlayerState : IBossState
+public class Middle_NormalAttackState : IBossState
 {
-    private MiddleBossStateMachine boss;
+    private Middle_BossStateMachine boss;
 
-    public MiddleNormalAttackPlayerState(MiddleBossStateMachine boss)
+    public Middle_NormalAttackState(Middle_BossStateMachine boss)
     {
         this.boss = boss;
     }
@@ -21,7 +21,7 @@ public class MiddleNormalAttackPlayerState : IBossState
         var info = boss.Animator.GetCurrentAnimatorStateInfo(0);
         if (info.IsName("Attack2") && info.normalizedTime >= 0.9f)
         {
-            boss.ChangeState(new MiddleChasePlayerState(boss), MiddleBossStateType.Chasing);
+            boss.ChangeState(new Middle_ChaseState(boss), MiddleBossStateType.Chasing);
         }
         boss.LookPlayer();
     }

@@ -12,9 +12,11 @@ public class Player : MonoBehaviour, IFighter
     {
         public int hp = 100;
         public int maxHp = 100;
+        public float guardCool = 2f;
     }
 
     [SerializeField] private Blade blade;
+    [SerializeField] private ParticleSystem parryingParticle;
 
     public static Player CurrentPlayer;
     public PlayerStat stats;
@@ -28,13 +30,22 @@ public class Player : MonoBehaviour, IFighter
     public bool IsGuarding { get; private set; }
     public bool IsParrying { get; private set; }
 
+    private float guardTimer = 0;
+
     private void Awake()
     {
         stats.hp = stats.maxHp;
         CurrentPlayer = this;
         controller = GetComponent<CharacterController>();
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
         OnDie = false;
+        guardTimer = stats.guardCool;
+    }
+
+    private void Update()
+    {
+        if (guardTimer > stats.guardCool) return;
+        guardTimer += Time.deltaTime;
     }
 
     public void AttackCoroutine()
@@ -68,6 +79,12 @@ public class Player : MonoBehaviour, IFighter
 
     public void TakeDamage(CombatEvent combatEvent)
     {
+        if (IsParrying)
+        {
+            parryingParticle.Play(true);
+            return;
+        }
+
         if (IsGuarding) return;
 
         stats.hp -= combatEvent.Damage;
@@ -86,7 +103,15 @@ public class Player : MonoBehaviour, IFighter
 
     public void Guard()
     {
+        if (guardTimer < stats.guardCool) return;
         IsGuarding = true;
+    }
+
+    public void GuardBreak()
+    {
+        guardTimer = 0;
+        IsParrying = false;
+        IsGuarding = false;
     }
 
     public void GuardCancel()

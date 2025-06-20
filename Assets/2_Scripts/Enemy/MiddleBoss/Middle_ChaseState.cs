@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class MiddleChasePlayerState : IBossState
+public class Middle_ChaseState : IBossState
 {
-    private MiddleBossStateMachine boss;
-    private float range = 4f;
+    private Middle_BossStateMachine boss;
+    private float range = 6.5f;
 
-    public MiddleChasePlayerState(MiddleBossStateMachine boss)
+    public Middle_ChaseState(Middle_BossStateMachine boss)
     {
         this.boss = boss;
     }
 
     public void Enter()
     {
-        boss.Animator.SetFloat("Speed", 1f);
+       
     }
 
     public void UpdateLogic()
@@ -26,7 +26,12 @@ public class MiddleChasePlayerState : IBossState
 
         if (distance < range)
         {
-            boss.ChangeState(new MiddleNormalAttackPlayerState(boss), MiddleBossStateType.NormalAttack);
+            boss.ChangeState(new Middle_NormalAttackState(boss), MiddleBossStateType.NormalAttack);
+        }
+        else
+        {
+            boss.Agent.isStopped = false;
+            boss.Animator.SetFloat("Speed", 1f);
         }
 
         boss.Agent.SetDestination(Player.CurrentPlayer.transform.position);
@@ -34,6 +39,7 @@ public class MiddleChasePlayerState : IBossState
 
     public void Exit()
     {
+        boss.Agent.isStopped = true;
         boss.Animator.SetFloat("Speed", 0f);
     }
 }

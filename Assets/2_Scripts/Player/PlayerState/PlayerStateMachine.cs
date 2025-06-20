@@ -224,7 +224,6 @@ public class PlayerStateMachine : MonoBehaviour
             ChangeState(new SlidingPlayerState(player), PlayerStateType.Sliding);
         }
     }
-
     public void SlidingMove()
     {
         float x = MoveInput.x;

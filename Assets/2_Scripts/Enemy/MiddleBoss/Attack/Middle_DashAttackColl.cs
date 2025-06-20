@@ -3,16 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MiddleDashAttackColl : MonoBehaviour
+public class Middle_DashAttackColl : MonoBehaviour
 {
     public bool CrashWall { get; set; }
     [SerializeField] private int damage = 20;
-    private MiddleBossStateMachine boss;
+    private Middle_BossStateMachine boss;
 
 
     private void Awake()
     {
-        boss = GetComponentInParent<MiddleBossStateMachine>();
+        boss = GetComponentInParent<Middle_BossStateMachine>();
         CrashWall = false;
     }
 
@@ -25,11 +25,15 @@ public class MiddleDashAttackColl : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Player.CurrentPlayer.GuardBreak();
+            
             CombatEvent e = new CombatEvent();
             e.Reciever = Player.CurrentPlayer;
             e.Sender = boss;
             e.Damage = damage;
             e.HitPosition = other.ClosestPoint(transform.position);
+
+            CombatSysytem.Instance.AddInGameEvent(e);
         }
 
         if (other.CompareTag("Obstacle"))

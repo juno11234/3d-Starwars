@@ -12,10 +12,11 @@ public enum MiddleBossStateType
     NormalAttack,
     PulseAttack,
     DashAttack,
+    Groggy,
     ExcutionReady
 }
 
-public class MiddleBossStateMachine : MonoBehaviour, IFighter
+public class Middle_BossStateMachine : MonoBehaviour, IFighter
 {
     public MiddleBossStateType CurrentStateType { get; private set; }
     private IBossState currentState;
@@ -29,7 +30,11 @@ public class MiddleBossStateMachine : MonoBehaviour, IFighter
     }
 
     [SerializeField] private GameObject warningParticle;
-    [SerializeField] private MiddleDashAttackColl dashAttackColl;
+    [SerializeField] private Middle_DashAttackColl dashAttackColl;
+    [SerializeField] private GameObject pulse;
+    [SerializeField] private GameObject excutionParticle;
+    [SerializeField] private GameObject attackColl;
+
     public BossStat stat;
 
     public Collider MainCollider => collider;
@@ -37,7 +42,8 @@ public class MiddleBossStateMachine : MonoBehaviour, IFighter
     public Animator Animator => animator;
     public NavMeshAgent Agent => agent;
     public GameObject WarnigParticle => warningParticle;
-    public MiddleDashAttackColl DashAttackColl => dashAttackColl;
+    public Middle_DashAttackColl DashAttackColl => dashAttackColl;
+    public GameObject ExcutionParticle => excutionParticle;
 
     private Collider collider;
     private Animator animator;
@@ -52,14 +58,17 @@ public class MiddleBossStateMachine : MonoBehaviour, IFighter
         stat.hp = stat.maxHp;
         animator = GetComponentInChildren<Animator>();
         warningParticle.SetActive(false);
+        excutionParticle.SetActive(false);
         dashAttackColl.gameObject.SetActive(false);
+        attackColl.SetActive(false);
     }
 
     void Start()
     {
         CombatSysytem.Instance.RegisterMonster(this);
-        ChangeState(new MiddleChasePlayerState(this), MiddleBossStateType.Chasing);
+        ChangeState(new Middle_ChaseState(this), MiddleBossStateType.Chasing);
         coolTimer = 0f;
+        
     }
 
     void Update()
@@ -82,7 +91,7 @@ public class MiddleBossStateMachine : MonoBehaviour, IFighter
 
     public void UseSkill()
     {
-        if (coolTimer == stat.skillCool)
+        if (Mathf.Approximately(coolTimer, stat.skillCool))
         {
             coolTimer = 0f;
             IBossState skillState;
@@ -90,18 +99,23 @@ public class MiddleBossStateMachine : MonoBehaviour, IFighter
             int random = Random.Range(0, 2);
             if (random == 0)
             {
-                skillState = new MiddleDashAttackPlayerState(this);
+                skillState = new Middle_DashAttackState(this);
                 skillStateType = MiddleBossStateType.DashAttack;
             }
             else
             {
-                skillState = new MiddlePulseAttackPlayerState(this);
+                skillState = new Middle_PulseAttackState(this);
                 skillStateType = MiddleBossStateType.PulseAttack;
             }
 
             warningParticle.SetActive(true);
             ChangeState(skillState, skillStateType);
         }
+    }
+
+    public void PulsePattern()
+    {
+        Instantiate(pulse, transform.position, Quaternion.identity);
     }
 
     public void LookPlayer()
@@ -111,5 +125,28 @@ public class MiddleBossStateMachine : MonoBehaviour, IFighter
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
     }
 
-    public void TakeDamage(CombatEvent combatEvent) { }
+    public void AttackCollOn()
+    {
+        attackColl.SetActive(true);
+    }
+
+    public void AttackCollOff()
+    {
+        attackColl.SetActive(false);
+    }
+
+    public void TakeDamage(CombatEvent combatEvent)
+    {
+        stat.hp -= combatEvent.Damage;
+
+        if (stat.hp <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        ChangeState(new Middle_ExcutionReadyState(this), MiddleBossStateType.ExcutionReady);
+    }
 }

@@ -6,6 +6,7 @@ using UnityEngine;
 public class BossCameraShakeTrigger : MonoBehaviour
 {
     private CinemachineImpulseSource impulseSource;
+    public static BossCameraShakeTrigger Instance;
     public float power = 3f;
 
     private void Awake()

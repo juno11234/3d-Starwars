@@ -15180,7 +15180,7 @@ ParticleSystem:
   emitterVelocityMode: 0
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -45374,7 +45374,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1a5433a698ee1b4ba7b4ae1e2354571, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  warningParticle: {fileID: 7276532308616524211}
+  warningParticle: {fileID: 7104331947021806987}
   dashAttackColl: {fileID: 1822216502286056520}
   pulse: {fileID: 6980319805999049184, guid: c5f028e1aa0562549a8cdb2fb3d14e0d, type: 3}
   excutionParticle: {fileID: 7174599629493599868}
@@ -45382,7 +45382,7 @@ MonoBehaviour:
   stat:
     hp: 300
     maxHp: 300
-    skillCool: 4
+    skillCool: 10
 --- !u!195 &6718958749982101156
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -50335,7 +50335,7 @@ ParticleSystem:
   emitterVelocityMode: 0
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:

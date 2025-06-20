@@ -29,7 +29,7 @@ public class Middle_BossStateMachine : MonoBehaviour, IFighter
         public float skillCool = 15f;
     }
 
-    [SerializeField] private GameObject warningParticle;
+    [SerializeField] private ParticleSystem warningParticle;
     [SerializeField] private Middle_DashAttackColl dashAttackColl;
     [SerializeField] private GameObject pulse;
     [SerializeField] private GameObject excutionParticle;
@@ -41,15 +41,16 @@ public class Middle_BossStateMachine : MonoBehaviour, IFighter
     public GameObject GameObject => gameObject;
     public Animator Animator => animator;
     public NavMeshAgent Agent => agent;
-    public GameObject WarnigParticle => warningParticle;
+    public ParticleSystem WarnigParticle => warningParticle;
     public Middle_DashAttackColl DashAttackColl => dashAttackColl;
     public GameObject ExcutionParticle => excutionParticle;
+    public bool OnDie => onDie;
 
     private Collider collider;
     private Animator animator;
     private NavMeshAgent agent;
     private float coolTimer;
-
+    private bool onDie = false;
 
     private void Awake()
     {
@@ -57,10 +58,10 @@ public class Middle_BossStateMachine : MonoBehaviour, IFighter
         collider = GetComponent<Collider>();
         stat.hp = stat.maxHp;
         animator = GetComponentInChildren<Animator>();
-        warningParticle.SetActive(false);
         excutionParticle.SetActive(false);
         dashAttackColl.gameObject.SetActive(false);
         attackColl.SetActive(false);
+        onDie = false;
     }
 
     void Start()
@@ -86,25 +87,28 @@ public class Middle_BossStateMachine : MonoBehaviour, IFighter
 
     public void UseSkill()
     {
-        if ((coolTimer >= stat.skillCool))
+        coolTimer = 0f;
+        IBossState skillState;
+        MiddleBossStateType skillStateType;
+        int random = Random.Range(0, 2);
+        if (random == 0)
         {
-            coolTimer = 0f;
-            IBossState skillState;
-            MiddleBossStateType skillStateType;
-            int random = Random.Range(0, 2);
-            if (random == 0)
-            {
-                skillState = new Middle_DashAttackState(this);
-                skillStateType = MiddleBossStateType.DashAttack;
-            }
-            else
-            {
-                skillState = new Middle_PulseAttackState(this);
-                skillStateType = MiddleBossStateType.PulseAttack;
-            }
-            
-            ChangeState(skillState, skillStateType);
+            skillState = new Middle_DashAttackState(this);
+            skillStateType = MiddleBossStateType.DashAttack;
         }
+        else
+        {
+            skillState = new Middle_PulseAttackState(this);
+            skillStateType = MiddleBossStateType.PulseAttack;
+        }
+
+        ChangeState(skillState, skillStateType);
+    }
+
+    public bool TrySkill()
+    {
+        if (coolTimer >= stat.skillCool) return true;
+        else return false;
     }
 
     public void PulsePattern()
@@ -131,16 +135,17 @@ public class Middle_BossStateMachine : MonoBehaviour, IFighter
 
     public void TakeDamage(CombatEvent combatEvent)
     {
+        if (onDie) return;
         stat.hp -= combatEvent.Damage;
 
         if (stat.hp <= 0)
         {
-            Die();
+            onDie = true;
         }
     }
 
     private void Die()
     {
-        ChangeState(new Middle_ExcutionReadyState(this), MiddleBossStateType.ExcutionReady);
+       
     }
 }

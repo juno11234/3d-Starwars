@@ -14,15 +14,22 @@ public class Middle_NormalAttackState : IBossState
     public void Enter()
     {
         boss.Animator.SetTrigger("Attack");
+
+        Debug.Log("기본");
     }
 
     public void UpdateLogic()
     {
         var info = boss.Animator.GetCurrentAnimatorStateInfo(0);
-        if (info.IsName("Attack2") && info.normalizedTime >= 0.9f)
+        if (boss.OnDie)
+        {
+            boss.ChangeState(new Middle_ExcutionReadyState(boss), MiddleBossStateType.ExcutionReady);
+        }
+        else if (info.IsName("Attack2") && info.normalizedTime >= 0.9f)
         {
             boss.ChangeState(new Middle_ChaseState(boss), MiddleBossStateType.Chasing);
         }
+
         boss.LookPlayer();
     }
 

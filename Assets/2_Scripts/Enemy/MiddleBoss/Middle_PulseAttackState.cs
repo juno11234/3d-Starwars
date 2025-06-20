@@ -13,15 +13,18 @@ public class Middle_PulseAttackState : IBossState
 
     public void Enter()
     {
-        boss.WarnigParticle.SetActive(true);
+        boss.WarnigParticle.Play(true);
         boss.Animator.SetTrigger("JumpAttack");
     }
 
     public void UpdateLogic()
     {
         var info = boss.Animator.GetCurrentAnimatorStateInfo(0);
-
-        if (info.IsName("JumpAttack") && info.normalizedTime >= 0.9f)
+        if (boss.OnDie)
+        {
+            boss.ChangeState(new Middle_ExcutionReadyState(boss), MiddleBossStateType.ExcutionReady);
+        }
+        else if (info.IsName("JumpAttack") && info.normalizedTime >= 0.9f)
         {
             boss.ChangeState(new Middle_ChaseState(boss), MiddleBossStateType.Chasing);
         }
@@ -29,8 +32,5 @@ public class Middle_PulseAttackState : IBossState
         boss.LookPlayer();
     }
 
-    public void Exit()
-    {
-        boss.WarnigParticle.SetActive(false);
-    }
+    public void Exit() { }
 }

@@ -7,18 +7,14 @@ public class Middle_ChaseState : IBossState
 {
     private Middle_BossStateMachine boss;
     private float range = 6.5f;
-   
+
 
     public Middle_ChaseState(Middle_BossStateMachine boss)
     {
         this.boss = boss;
     }
 
-    public void Enter()
-    {
-        Debug.Log("추격");
-       
-    }
+    public void Enter() { }
 
     public void UpdateLogic()
     {

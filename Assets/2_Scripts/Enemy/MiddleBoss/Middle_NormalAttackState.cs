@@ -14,8 +14,6 @@ public class Middle_NormalAttackState : IBossState
     public void Enter()
     {
         boss.Animator.SetTrigger("Attack");
-
-        Debug.Log("기본");
     }
 
     public void UpdateLogic()

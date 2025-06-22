@@ -7,7 +7,6 @@ public class KnockbackPlayerState : IPlayerState
     private PlayerStateMachine player;
     private float knockbackTime = 2f;
     private float timer = 0f;
-    private float knockbakcPower = 10f;
     private Vector3 knockbackDir = Vector3.zero;
 
     public KnockbackPlayerState(PlayerStateMachine player, Vector3 knockbackDir)

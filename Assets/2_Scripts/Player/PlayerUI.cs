@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,16 +11,17 @@ public class PlayerUI : MonoBehaviour
     public Slider bossHpSlider;
     public Middle_BossStateMachine boss;
     private bool nullboss = false;
+    
 
     void Start()
     {
         hpSlider.maxValue = Player.CurrentPlayer.stats.maxHp;
         staminaSlider.maxValue = Player.CurrentPlayer.stats.maxGuardStamina;
-
         bossHpSlider.gameObject.SetActive(false);
 
         if (boss == null)
         {
+            
             nullboss = true;
             return;
         }
@@ -35,5 +37,10 @@ public class PlayerUI : MonoBehaviour
 
         if (nullboss) return;
         bossHpSlider.value = boss.stat.hp;
+    }
+
+    public void BossHpActive()
+    {
+        bossHpSlider.gameObject.SetActive(true);
     }
 }

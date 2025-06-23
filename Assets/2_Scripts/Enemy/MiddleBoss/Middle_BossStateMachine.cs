@@ -69,6 +69,7 @@ public class Middle_BossStateMachine : MonoBehaviour, IFighter
         CombatSysytem.Instance.RegisterMonster(this);
         ChangeState(new Middle_ChaseState(this), MiddleBossStateType.Chasing);
         coolTimer = 0f;
+        
     }
 
     void Update()
@@ -144,8 +145,5 @@ public class Middle_BossStateMachine : MonoBehaviour, IFighter
         }
     }
 
-    private void Die()
-    {
-       
-    }
+    private void Die() { }
 }

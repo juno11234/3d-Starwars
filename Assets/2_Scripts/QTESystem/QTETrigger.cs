@@ -18,4 +18,9 @@ public class QTETrigger : MonoBehaviour
     {
         qteManager.StartQTE(qteKeys, duration);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        qteManager.StartQTE(qteKeys, duration);
+    }
 }

@@ -6,6 +6,7 @@ using UnityEngine.Playables;
 
 public class QTETimelineBranch : MonoBehaviour
 {
+    [SerializeField] PlayableDirector currentTimeline;
     [SerializeField] PlayableDirector failTimeline;
     QTEManager qteManager;
 
@@ -21,6 +22,7 @@ public class QTETimelineBranch : MonoBehaviour
 
     public void QTEFail()
     {
+        currentTimeline.Stop();
         failTimeline.Play();
     }
 }

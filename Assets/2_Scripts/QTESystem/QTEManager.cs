@@ -35,6 +35,8 @@ public class QTEManager : MonoBehaviour
     {
         foreach (var entry in keySprites)
             keySpriteDict[entry.name] = entry.sprite;
+        
+        qtePanel.SetActive(false);
     }
 
     void Update()
@@ -59,12 +61,12 @@ public class QTEManager : MonoBehaviour
                 action.performed += OnActionPerformed;
         }
 
-        ShowQTEUI();
+       
         qteKey = actionNames;
         currentIndex = 0;
         timer = duration;
         isActive = true;
-
+        ShowQTEUI();
         Debug.Log("QTE started");
     }
 
@@ -115,9 +117,10 @@ public class QTEManager : MonoBehaviour
 
     private void ShowQTEUI()
     {
+        
         qtePanel.SetActive(true);
         ClearQTEUI();
-
+        
         foreach (string key in qteKey)
         {
             GameObject slot = Instantiate(keySlotPrefab, keyContainer);

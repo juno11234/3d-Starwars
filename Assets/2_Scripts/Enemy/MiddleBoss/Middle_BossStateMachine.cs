@@ -34,7 +34,7 @@ public class Middle_BossStateMachine : MonoBehaviour, IFighter
     [SerializeField] private GameObject pulse;
     [SerializeField] private GameObject excutionParticle;
     [SerializeField] private GameObject attackColl;
-
+    [SerializeField] private PlayerUI playerUi;
     public BossStat stat;
 
     public Collider MainCollider => collider;
@@ -51,6 +51,7 @@ public class Middle_BossStateMachine : MonoBehaviour, IFighter
     private NavMeshAgent agent;
     private float coolTimer;
     private bool onDie = false;
+
 
     private void Awake()
     {
@@ -69,7 +70,7 @@ public class Middle_BossStateMachine : MonoBehaviour, IFighter
         CombatSysytem.Instance.RegisterMonster(this);
         ChangeState(new Middle_ChaseState(this), MiddleBossStateType.Chasing);
         coolTimer = 0f;
-        
+        playerUi.BossHpActive();
     }
 
     void Update()
@@ -77,7 +78,7 @@ public class Middle_BossStateMachine : MonoBehaviour, IFighter
         currentState.UpdateLogic();
         coolTimer += Time.deltaTime;
     }
-
+    
     public void ChangeState(IBossState newPlayerState, MiddleBossStateType newStateType)
     {
         currentState?.Exit();

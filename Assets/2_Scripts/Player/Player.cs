@@ -97,6 +97,7 @@ public class Player : MonoBehaviour, IFighter
 
     public void TakeDamage(CombatEvent combatEvent)
     {
+        if (OnDie) return;
         if (IsParrying)
         {
             parryingParticle.Play(true);

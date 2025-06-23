@@ -17,11 +17,11 @@ public class PlayerUI : MonoBehaviour
     {
         hpSlider.maxValue = Player.CurrentPlayer.stats.maxHp;
         staminaSlider.maxValue = Player.CurrentPlayer.stats.maxGuardStamina;
-        bossHpSlider.gameObject.SetActive(false);
+        
 
         if (boss == null)
         {
-            
+            bossHpSlider.gameObject.SetActive(false);
             nullboss = true;
             return;
         }

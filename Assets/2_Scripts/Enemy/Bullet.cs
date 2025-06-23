@@ -58,7 +58,6 @@ public class Bullet : MonoBehaviour
         {
             currentTime = 0f;
             parryBullet = true;
-            damage = 100;
         }
 
         if (parryBullet && other.CompareTag("Enemy"))

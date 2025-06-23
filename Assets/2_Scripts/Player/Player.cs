@@ -13,6 +13,8 @@ public class Player : MonoBehaviour, IFighter
         public int hp = 100;
         public int maxHp = 100;
         public float guardCool = 2f;
+        public int guardStamina = 50;
+        public int maxGuardStamina = 50;
     }
 
     [SerializeField] private Blade blade;
@@ -35,6 +37,7 @@ public class Player : MonoBehaviour, IFighter
     private void Awake()
     {
         stats.hp = stats.maxHp;
+        stats.guardStamina = stats.maxGuardStamina;
         CurrentPlayer = this;
         controller = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
@@ -42,10 +45,25 @@ public class Player : MonoBehaviour, IFighter
         guardTimer = stats.guardCool;
     }
 
+    float timer = 0f;
+
     private void Update()
     {
-        if (guardTimer > stats.guardCool) return;
-        guardTimer += Time.deltaTime;
+        if (guardTimer < stats.guardCool)
+        {
+            guardTimer += Time.deltaTime;
+            return;
+        }
+
+        if (stats.guardStamina >= stats.maxGuardStamina) return;
+
+        timer += Time.deltaTime;
+
+        if (timer > 1f)
+        {
+            timer = 0f;
+            stats.guardStamina += 1;
+        }
     }
 
     public void AttackCoroutine()
@@ -85,7 +103,16 @@ public class Player : MonoBehaviour, IFighter
             return;
         }
 
-        if (IsGuarding) return;
+        if (IsGuarding)
+        {
+            stats.guardStamina -= combatEvent.Damage;
+            if (stats.guardStamina <= 0)
+            {
+                GuardBreak();
+            }
+
+            return;
+        }
 
         stats.hp -= combatEvent.Damage;
 
@@ -101,10 +128,15 @@ public class Player : MonoBehaviour, IFighter
         animator.SetTrigger("Die");
     }
 
-    public void Guard()
+    public bool Guard()
     {
-        if (guardTimer < stats.guardCool) return;
+        if (stats.guardStamina <= 0)
+        {
+            return false;
+        }
+
         IsGuarding = true;
+        return true;
     }
 
     public void GuardBreak()
@@ -128,5 +160,4 @@ public class Player : MonoBehaviour, IFighter
     {
         IsParrying = false;
     }
-    
 }

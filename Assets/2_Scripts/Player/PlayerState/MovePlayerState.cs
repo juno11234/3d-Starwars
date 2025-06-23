@@ -8,7 +8,7 @@ public class MovePlayerState : IPlayerState
     public MovePlayerState(PlayerStateMachine player) => this.player = player;
 
     public void Enter()
-    {            
+    {
         player.ResetJumpCount();
         player.Animator.SetTrigger("Ground");
     }
@@ -20,7 +20,7 @@ public class MovePlayerState : IPlayerState
             player.ChangeState(new AttackPlayerState(player), PlayerStateType.Attack);
         }
 
-        if (player.GuardInput)
+        if (player.GuardInput && Player.CurrentPlayer.Guard())
         {
             player.ChangeState(new GuardPlayerState(player), PlayerStateType.Guard);
         }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Playables;
 using Random = UnityEngine.Random;
 
 
@@ -35,6 +36,7 @@ public class Middle_BossStateMachine : MonoBehaviour, IFighter
     [SerializeField] private GameObject excutionParticle;
     [SerializeField] private GameObject attackColl;
     [SerializeField] private PlayerUI playerUi;
+    
     public BossStat stat;
 
     public Collider MainCollider => collider;
@@ -43,8 +45,9 @@ public class Middle_BossStateMachine : MonoBehaviour, IFighter
     public NavMeshAgent Agent => agent;
     public ParticleSystem WarnigParticle => warningParticle;
     public Middle_DashAttackColl DashAttackColl => dashAttackColl;
-    public GameObject ExcutionParticle => excutionParticle;
+    
     public bool OnDie => onDie;
+    
 
     private Collider collider;
     private Animator animator;
@@ -78,7 +81,7 @@ public class Middle_BossStateMachine : MonoBehaviour, IFighter
         currentState.UpdateLogic();
         coolTimer += Time.deltaTime;
     }
-    
+
     public void ChangeState(IBossState newPlayerState, MiddleBossStateType newStateType)
     {
         currentState?.Exit();

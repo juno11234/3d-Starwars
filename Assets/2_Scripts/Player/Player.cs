@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour, IFighter
@@ -22,7 +23,7 @@ public class Player : MonoBehaviour, IFighter
 
     public static Player CurrentPlayer;
     public PlayerStat stats;
-
+    public bool excutionInput;
     private CharacterController controller;
     private Animator animator;
 
@@ -123,10 +124,17 @@ public class Player : MonoBehaviour, IFighter
         }
     }
 
-    private void Die()
+    public void Die()
     {
         OnDie = true;
         animator.SetTrigger("Die");
+        StartCoroutine(DeadCoroutine());
+    }
+
+    IEnumerator DeadCoroutine()
+    {
+        yield return new WaitForSecondsRealtime(3f);
+        SceneManager.LoadScene(0);
     }
 
     public bool Guard()

@@ -1,140 +1,404 @@
 fileFormatVersion: 2
 guid: 3e685dd57e9c78b49b20bef3e8358ae3
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: BladeR
-    100002: Body_Player
-    100004: Chest
-    100006: Head
-    100008: Hips
-    100010: LeftArm
-    100012: LeftFoot
-    100014: LeftForeArm
-    100016: LeftHand
-    100018: LeftIndex1
-    100020: LeftIndex2
-    100022: LeftIndex3
-    100024: LeftLeg
-    100026: LeftMiddle1
-    100028: LeftMiddle2
-    100030: LeftMiddle3
-    100032: LeftPink1
-    100034: LeftPink2
-    100036: LeftPink3
-    100038: LeftRing1
-    100040: LeftRing2
-    100042: LeftRing3
-    100044: LeftShoulder
-    100046: LeftThumb1
-    100048: LeftThumb2
-    100050: LeftThumb3
-    100052: LeftToe
-    100054: LeftUpLeg
-    100056: Neck
-    100058: //RootNode
-    100060: RightArm
-    100062: RightFoot
-    100064: RightForeArm
-    100066: RightHand
-    100068: RightIndex1
-    100070: RightIndex2
-    100072: RightIndex3
-    100074: RightLeg
-    100076: RightMiddle1
-    100078: RightMiddle2
-    100080: RightMiddle3
-    100082: RightPinky1
-    100084: RightPinky2
-    100086: RightPinky3
-    100088: RightRing1
-    100090: RightRing2
-    100092: RightRing3
-    100094: RightShoulder
-    100096: RightThumb1
-    100098: RightThumb2
-    100100: RightThumb3
-    100102: RightToe
-    100104: RightUpLeg
-    100106: Spine
-    100108: Sword_Hold
-    400000: BladeR
-    400002: Body_Player
-    400004: Chest
-    400006: Head
-    400008: Hips
-    400010: LeftArm
-    400012: LeftFoot
-    400014: LeftForeArm
-    400016: LeftHand
-    400018: LeftIndex1
-    400020: LeftIndex2
-    400022: LeftIndex3
-    400024: LeftLeg
-    400026: LeftMiddle1
-    400028: LeftMiddle2
-    400030: LeftMiddle3
-    400032: LeftPink1
-    400034: LeftPink2
-    400036: LeftPink3
-    400038: LeftRing1
-    400040: LeftRing2
-    400042: LeftRing3
-    400044: LeftShoulder
-    400046: LeftThumb1
-    400048: LeftThumb2
-    400050: LeftThumb3
-    400052: LeftToe
-    400054: LeftUpLeg
-    400056: Neck
-    400058: //RootNode
-    400060: RightArm
-    400062: RightFoot
-    400064: RightForeArm
-    400066: RightHand
-    400068: RightIndex1
-    400070: RightIndex2
-    400072: RightIndex3
-    400074: RightLeg
-    400076: RightMiddle1
-    400078: RightMiddle2
-    400080: RightMiddle3
-    400082: RightPinky1
-    400084: RightPinky2
-    400086: RightPinky3
-    400088: RightRing1
-    400090: RightRing2
-    400092: RightRing3
-    400094: RightShoulder
-    400096: RightThumb1
-    400098: RightThumb2
-    400100: RightThumb3
-    400102: RightToe
-    400104: RightUpLeg
-    400106: Spine
-    400108: Sword_Hold
-    2100000: Player_A
-    2300000: BladeR
-    2300002: Sword_Hold
-    3300000: BladeR
-    3300002: Sword_Hold
-    4300000: Body_Player
-    4300002: BladeR
-    4300004: Sword_Hold
-    7400000: Tpose
-    7400002: Execution1_PlayerA
-    7400004: Execution2_PlayerA
-    7400006: Execution3_PlayerA
-    7400008: Execution4_PlayerA
-    7400010: Execution5_PlayerA
-    7400012: Execution6_PlayerA
-    7400014: Execution7_PlayerA
-    7400016: Execution8_PlayerA
-    7400018: Execution9_PlayerA
-    7400020: Execution10_PlayerA
-    9500000: //RootNode
-    13700000: Body_Player
-    2186277476908879412: ImportLogs
+  serializedVersion: 22200
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: BladeR
+  - first:
+      1: 100002
+    second: Body_Player
+  - first:
+      1: 100004
+    second: Chest
+  - first:
+      1: 100006
+    second: Head
+  - first:
+      1: 100008
+    second: Hips
+  - first:
+      1: 100010
+    second: LeftArm
+  - first:
+      1: 100012
+    second: LeftFoot
+  - first:
+      1: 100014
+    second: LeftForeArm
+  - first:
+      1: 100016
+    second: LeftHand
+  - first:
+      1: 100018
+    second: LeftIndex1
+  - first:
+      1: 100020
+    second: LeftIndex2
+  - first:
+      1: 100022
+    second: LeftIndex3
+  - first:
+      1: 100024
+    second: LeftLeg
+  - first:
+      1: 100026
+    second: LeftMiddle1
+  - first:
+      1: 100028
+    second: LeftMiddle2
+  - first:
+      1: 100030
+    second: LeftMiddle3
+  - first:
+      1: 100032
+    second: LeftPink1
+  - first:
+      1: 100034
+    second: LeftPink2
+  - first:
+      1: 100036
+    second: LeftPink3
+  - first:
+      1: 100038
+    second: LeftRing1
+  - first:
+      1: 100040
+    second: LeftRing2
+  - first:
+      1: 100042
+    second: LeftRing3
+  - first:
+      1: 100044
+    second: LeftShoulder
+  - first:
+      1: 100046
+    second: LeftThumb1
+  - first:
+      1: 100048
+    second: LeftThumb2
+  - first:
+      1: 100050
+    second: LeftThumb3
+  - first:
+      1: 100052
+    second: LeftToe
+  - first:
+      1: 100054
+    second: LeftUpLeg
+  - first:
+      1: 100056
+    second: Neck
+  - first:
+      1: 100058
+    second: //RootNode
+  - first:
+      1: 100060
+    second: RightArm
+  - first:
+      1: 100062
+    second: RightFoot
+  - first:
+      1: 100064
+    second: RightForeArm
+  - first:
+      1: 100066
+    second: RightHand
+  - first:
+      1: 100068
+    second: RightIndex1
+  - first:
+      1: 100070
+    second: RightIndex2
+  - first:
+      1: 100072
+    second: RightIndex3
+  - first:
+      1: 100074
+    second: RightLeg
+  - first:
+      1: 100076
+    second: RightMiddle1
+  - first:
+      1: 100078
+    second: RightMiddle2
+  - first:
+      1: 100080
+    second: RightMiddle3
+  - first:
+      1: 100082
+    second: RightPinky1
+  - first:
+      1: 100084
+    second: RightPinky2
+  - first:
+      1: 100086
+    second: RightPinky3
+  - first:
+      1: 100088
+    second: RightRing1
+  - first:
+      1: 100090
+    second: RightRing2
+  - first:
+      1: 100092
+    second: RightRing3
+  - first:
+      1: 100094
+    second: RightShoulder
+  - first:
+      1: 100096
+    second: RightThumb1
+  - first:
+      1: 100098
+    second: RightThumb2
+  - first:
+      1: 100100
+    second: RightThumb3
+  - first:
+      1: 100102
+    second: RightToe
+  - first:
+      1: 100104
+    second: RightUpLeg
+  - first:
+      1: 100106
+    second: Spine
+  - first:
+      1: 100108
+    second: Sword_Hold
+  - first:
+      4: 400000
+    second: BladeR
+  - first:
+      4: 400002
+    second: Body_Player
+  - first:
+      4: 400004
+    second: Chest
+  - first:
+      4: 400006
+    second: Head
+  - first:
+      4: 400008
+    second: Hips
+  - first:
+      4: 400010
+    second: LeftArm
+  - first:
+      4: 400012
+    second: LeftFoot
+  - first:
+      4: 400014
+    second: LeftForeArm
+  - first:
+      4: 400016
+    second: LeftHand
+  - first:
+      4: 400018
+    second: LeftIndex1
+  - first:
+      4: 400020
+    second: LeftIndex2
+  - first:
+      4: 400022
+    second: LeftIndex3
+  - first:
+      4: 400024
+    second: LeftLeg
+  - first:
+      4: 400026
+    second: LeftMiddle1
+  - first:
+      4: 400028
+    second: LeftMiddle2
+  - first:
+      4: 400030
+    second: LeftMiddle3
+  - first:
+      4: 400032
+    second: LeftPink1
+  - first:
+      4: 400034
+    second: LeftPink2
+  - first:
+      4: 400036
+    second: LeftPink3
+  - first:
+      4: 400038
+    second: LeftRing1
+  - first:
+      4: 400040
+    second: LeftRing2
+  - first:
+      4: 400042
+    second: LeftRing3
+  - first:
+      4: 400044
+    second: LeftShoulder
+  - first:
+      4: 400046
+    second: LeftThumb1
+  - first:
+      4: 400048
+    second: LeftThumb2
+  - first:
+      4: 400050
+    second: LeftThumb3
+  - first:
+      4: 400052
+    second: LeftToe
+  - first:
+      4: 400054
+    second: LeftUpLeg
+  - first:
+      4: 400056
+    second: Neck
+  - first:
+      4: 400058
+    second: //RootNode
+  - first:
+      4: 400060
+    second: RightArm
+  - first:
+      4: 400062
+    second: RightFoot
+  - first:
+      4: 400064
+    second: RightForeArm
+  - first:
+      4: 400066
+    second: RightHand
+  - first:
+      4: 400068
+    second: RightIndex1
+  - first:
+      4: 400070
+    second: RightIndex2
+  - first:
+      4: 400072
+    second: RightIndex3
+  - first:
+      4: 400074
+    second: RightLeg
+  - first:
+      4: 400076
+    second: RightMiddle1
+  - first:
+      4: 400078
+    second: RightMiddle2
+  - first:
+      4: 400080
+    second: RightMiddle3
+  - first:
+      4: 400082
+    second: RightPinky1
+  - first:
+      4: 400084
+    second: RightPinky2
+  - first:
+      4: 400086
+    second: RightPinky3
+  - first:
+      4: 400088
+    second: RightRing1
+  - first:
+      4: 400090
+    second: RightRing2
+  - first:
+      4: 400092
+    second: RightRing3
+  - first:
+      4: 400094
+    second: RightShoulder
+  - first:
+      4: 400096
+    second: RightThumb1
+  - first:
+      4: 400098
+    second: RightThumb2
+  - first:
+      4: 400100
+    second: RightThumb3
+  - first:
+      4: 400102
+    second: RightToe
+  - first:
+      4: 400104
+    second: RightUpLeg
+  - first:
+      4: 400106
+    second: Spine
+  - first:
+      4: 400108
+    second: Sword_Hold
+  - first:
+      21: 2100000
+    second: Player_A
+  - first:
+      23: 2300000
+    second: BladeR
+  - first:
+      23: 2300002
+    second: Sword_Hold
+  - first:
+      33: 3300000
+    second: BladeR
+  - first:
+      33: 3300002
+    second: Sword_Hold
+  - first:
+      43: 4300000
+    second: Body_Player
+  - first:
+      43: 4300002
+    second: BladeR
+  - first:
+      43: 4300004
+    second: Sword_Hold
+  - first:
+      74: 7400000
+    second: Tpose
+  - first:
+      74: 7400002
+    second: Execution1_PlayerA
+  - first:
+      74: 7400004
+    second: Execution2_PlayerA
+  - first:
+      74: 7400006
+    second: Execution3_PlayerA
+  - first:
+      74: 7400008
+    second: Execution4_PlayerA
+  - first:
+      74: 7400010
+    second: Execution5_PlayerA
+  - first:
+      74: 7400012
+    second: Execution6_PlayerA
+  - first:
+      74: 7400014
+    second: Execution7_PlayerA
+  - first:
+      74: 7400016
+    second: Execution8_PlayerA
+  - first:
+      74: 7400018
+    second: Execution9_PlayerA
+  - first:
+      74: 7400020
+    second: Execution10_PlayerA
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: Body_Player
+  - first:
+      41386430: 2186277476908879412
+    second: ImportLogs
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -142,7 +406,7 @@ ModelImporter:
       name: Player_A
     second: {fileID: 2100000, guid: 9c3ca66ca9cf97d45b3984efc20ae59a, type: 2}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -151,6 +415,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -159,26 +424,26 @@ ModelImporter:
       that might lower retargeting quality:\nNote: Activate translation DOF on avatar
       to improve retargeting quality.\n\t'Chest' has translation animation that will
       be discarded.\n\nClip 'Execution2_PlayerA' has import animation warnings that
-      might lower retargeting quality:\nNote: Activate translation DOF on avatar to
-      improve retargeting quality.\n\t'Chest' has translation animation that will
+      might lower retargeting quality:\nNote: Activate translation DOF on avatar
+      to improve retargeting quality.\n\t'Chest' has translation animation that will
       be discarded.\n\nClip 'Execution3_PlayerA' has import animation warnings that
-      might lower retargeting quality:\nNote: Activate translation DOF on avatar to
-      improve retargeting quality.\n\t'Chest' has translation animation that will
+      might lower retargeting quality:\nNote: Activate translation DOF on avatar
+      to improve retargeting quality.\n\t'Chest' has translation animation that will
       be discarded.\n\nClip 'Execution5_PlayerA' has import animation warnings that
-      might lower retargeting quality:\nNote: Activate translation DOF on avatar to
-      improve retargeting quality.\n\t'Chest' has translation animation that will
+      might lower retargeting quality:\nNote: Activate translation DOF on avatar
+      to improve retargeting quality.\n\t'Chest' has translation animation that will
       be discarded.\n\nClip 'Execution6_PlayerA' has import animation warnings that
-      might lower retargeting quality:\nNote: Activate translation DOF on avatar to
-      improve retargeting quality.\n\t'Chest' has translation animation that will
+      might lower retargeting quality:\nNote: Activate translation DOF on avatar
+      to improve retargeting quality.\n\t'Chest' has translation animation that will
       be discarded.\n\nClip 'Execution7_PlayerA' has import animation warnings that
-      might lower retargeting quality:\nNote: Activate translation DOF on avatar to
-      improve retargeting quality.\n\t'Chest' has translation animation that will
+      might lower retargeting quality:\nNote: Activate translation DOF on avatar
+      to improve retargeting quality.\n\t'Chest' has translation animation that will
       be discarded.\n\nClip 'Execution9_PlayerA' has import animation warnings that
-      might lower retargeting quality:\nNote: Activate translation DOF on avatar to
-      improve retargeting quality.\n\t'Chest' has translation animation that will
+      might lower retargeting quality:\nNote: Activate translation DOF on avatar
+      to improve retargeting quality.\n\t'Chest' has translation animation that will
       be discarded.\n\nClip 'Execution10_PlayerA' has import animation warnings that
-      might lower retargeting quality:\nNote: Activate translation DOF on avatar to
-      improve retargeting quality.\n\t'Chest' has translation animation that will
+      might lower retargeting quality:\nNote: Activate translation DOF on avatar
+      to improve retargeting quality.\n\t'Chest' has translation animation that will
       be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
@@ -195,6 +460,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Tpose
       takeName: Tpose
+      internalID: 0
       firstFrame: 0
       lastFrame: 10
       wrapMode: 0
@@ -205,9 +471,9 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
@@ -223,6 +489,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Execution1_PlayerA
       takeName: Execution1_PlayerA
+      internalID: 0
       firstFrame: 0
       lastFrame: 86
       wrapMode: 0
@@ -251,6 +518,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Execution2_PlayerA
       takeName: Execution2_PlayerA
+      internalID: 0
       firstFrame: 0
       lastFrame: 107
       wrapMode: 0
@@ -279,6 +547,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Execution3_PlayerA
       takeName: Execution3_PlayerA
+      internalID: 0
       firstFrame: 0
       lastFrame: 110
       wrapMode: 0
@@ -307,6 +576,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Execution4_PlayerA
       takeName: Execution4_PlayerA
+      internalID: 0
       firstFrame: 0
       lastFrame: 99
       wrapMode: 0
@@ -335,6 +605,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Execution5_PlayerA
       takeName: Execution5_PlayerA
+      internalID: 0
       firstFrame: 0
       lastFrame: 150
       wrapMode: 0
@@ -363,6 +634,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Execution6_PlayerA
       takeName: Execution6_PlayerA
+      internalID: 0
       firstFrame: 0
       lastFrame: 81
       wrapMode: 0
@@ -391,6 +663,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Execution7_PlayerA
       takeName: Execution7_PlayerA
+      internalID: 0
       firstFrame: 0
       lastFrame: 60
       wrapMode: 0
@@ -419,6 +692,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Execution8_PlayerA
       takeName: Execution8_PlayerA
+      internalID: 0
       firstFrame: 0
       lastFrame: 70
       wrapMode: 0
@@ -447,6 +721,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Execution9_PlayerA
       takeName: Execution9_PlayerA
+      internalID: 0
       firstFrame: 0
       lastFrame: 83
       wrapMode: 0
@@ -475,6 +750,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Execution10_PlayerA
       takeName: Execution10_PlayerA
+      internalID: 0
       firstFrame: 0
       lastFrame: 77
       wrapMode: 0
@@ -507,25 +783,36 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 0.01
-    hasPreviousCalculatedGlobalScale: 1
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -534,10 +821,10 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human:
     - boneName: Hips
       humanName: Hips
@@ -1230,13 +1517,19 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  importBlendShapeDeformPercent: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

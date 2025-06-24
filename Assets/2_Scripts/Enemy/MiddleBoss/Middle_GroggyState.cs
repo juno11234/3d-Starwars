@@ -25,7 +25,7 @@ public class Middle_GroggyState : IBossState
         timer += Time.deltaTime;
         if (boss.OnDie)
         {
-            boss.ChangeState(new Middle_ExcutionReadyState(boss), MiddleBossStateType.ExcutionReady);
+            boss.ChangeState(new Middle_DeadState(boss), MiddleBossStateType.ExcutionReady);
         }
         else if (timer >= groggyTime)
         {

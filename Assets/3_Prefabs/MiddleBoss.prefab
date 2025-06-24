@@ -35054,7 +35054,7 @@ Transform:
   m_GameObject: {fileID: 4508636734486484107}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 1.59}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -35079,10 +35079,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 3
-  m_Height: 10
+  m_Radius: 2
+  m_Height: 4
   m_Direction: 1
-  m_Center: {x: 0, y: 4, z: 0}
+  m_Center: {x: 0, y: 2, z: 0}
 --- !u!114 &1822216502286056520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45379,6 +45379,8 @@ MonoBehaviour:
   pulse: {fileID: 6980319805999049184, guid: c5f028e1aa0562549a8cdb2fb3d14e0d, type: 3}
   excutionParticle: {fileID: 7174599629493599868}
   attackColl: {fileID: 9154840706312573584}
+  playerUi: {fileID: 0}
+  excutionTimeline: {fileID: 0}
   stat:
     hp: 300
     maxHp: 300

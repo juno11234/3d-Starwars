@@ -21,7 +21,7 @@ public class Middle_NormalAttackState : IBossState
         var info = boss.Animator.GetCurrentAnimatorStateInfo(0);
         if (boss.OnDie)
         {
-            boss.ChangeState(new Middle_ExcutionReadyState(boss), MiddleBossStateType.ExcutionReady);
+            boss.ChangeState(new Middle_DeadState(boss), MiddleBossStateType.ExcutionReady);
         }
         else if (info.IsName("Attack2") && info.normalizedTime >= 0.9f)
         {

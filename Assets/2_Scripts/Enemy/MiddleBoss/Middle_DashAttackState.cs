@@ -7,6 +7,7 @@ public class Middle_DashAttackState : IBossState
     private Middle_BossStateMachine boss;
     private float speed = 10f;
     Vector3 direction;
+   
 
     public Middle_DashAttackState(Middle_BossStateMachine boss)
     {
@@ -18,14 +19,17 @@ public class Middle_DashAttackState : IBossState
         boss.Animator.SetBool("DashAttack", true);
         direction = boss.transform.forward;
         boss.DashAttackColl.gameObject.SetActive(true);
+      
         boss.WarnigParticle.Play(true);
     }
 
     public void UpdateLogic()
     {
+     
+
         if (boss.OnDie)
         {
-            boss.ChangeState(new Middle_ExcutionReadyState(boss), MiddleBossStateType.ExcutionReady);
+            boss.ChangeState(new Middle_DeadState(boss), MiddleBossStateType.ExcutionReady);
         }
         else if (boss.DashAttackColl.CrashWall)
         {
@@ -43,5 +47,6 @@ public class Middle_DashAttackState : IBossState
     {
         boss.DashAttackColl.gameObject.SetActive(false);
         boss.Animator.SetBool("DashAttack", false);
+       
     }
 }

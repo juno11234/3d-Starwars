@@ -37,7 +37,7 @@ public class PlayerStateMachine : MonoBehaviour
     public bool AttackInput { get; set; }
     public bool GuardInput { get; set; }
     public bool DodgeInput { get; set; }
-
+    public bool ExcutionInput { get; set; }
     public bool FlyingTrigger { get; set; }
     public bool SlidingTrigger { get; set; }
 
@@ -94,7 +94,8 @@ public class PlayerStateMachine : MonoBehaviour
     private void Update()
     {
         if (Player.CurrentPlayer.OnDie) return;
-        
+
+        ExcutionInput = Player.CurrentPlayer.excutionInput;
         currentPlayerState.Input();
         currentPlayerState.UpdateLogic();
 

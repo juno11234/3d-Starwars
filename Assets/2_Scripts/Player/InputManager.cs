@@ -36,6 +36,7 @@ public class InputManager : MonoBehaviour
 
         playerActions.Dodge.performed += _ => stateMachine.DodgeInput = true;
         playerActions.Excute.performed += _ => stateMachine.ExcutionInput = true;
+        playerActions.Exit.performed += _ => Application.Quit();
     }
 
     private void Update()

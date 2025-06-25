@@ -10,6 +10,7 @@ public class TimeLineHandle : MonoBehaviour
     [SerializeField] private InputManager playerInput;
     [SerializeField] private GameObject freeLookCam;
     [SerializeField] private GameObject portalManager;
+    [SerializeField] private PlayerUI playerUI;
 
     [SerializeField] private float slowSpeed = 0.2f;
 
@@ -31,6 +32,16 @@ public class TimeLineHandle : MonoBehaviour
     public void CamDisable()
     {
         freeLookCam.SetActive(false);
+    }
+
+    public void PlayerUIEnable()
+    {
+        playerUI.gameObject.SetActive(true);
+    }
+
+    public void PlayerUIDisable()
+    {
+        playerUI.gameObject.SetActive(false);
     }
 
     public void PortalEnable()

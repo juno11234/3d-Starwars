@@ -33,9 +33,7 @@ public class InputManager : MonoBehaviour
 
         playerActions.Guard.performed += _ => stateMachine.GuardInput = true;
         playerActions.Guard.canceled += _ => stateMachine.GuardInput = false;
-
-        playerActions.Dodge.performed += _ => stateMachine.DodgeInput = true;
-        playerActions.Excute.performed += _ => stateMachine.ExcutionInput = true;
+        
         playerActions.Exit.performed += _ => Application.Quit();
     }
 

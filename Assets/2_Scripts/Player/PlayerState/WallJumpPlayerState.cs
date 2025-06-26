@@ -6,8 +6,6 @@ public class WallJumpPlayerState : IPlayerState
 {
     private PlayerStateMachine player;
     private Vector3 wallNormal;
-    private float timer;
-    private float duration = 0.2f;
 
     private float runCool = 1f;
     private float runTimer = 0f;
@@ -20,10 +18,9 @@ public class WallJumpPlayerState : IPlayerState
 
     public void Enter()
     {
-        Vector3 jumpDir = (wallNormal + Vector3.up).normalized;
+        Vector3 jumpDir = wallNormal.normalized;
 
         player.TryWallJump(jumpDir);
-        timer = 0;
         runTimer = 0;
     }
 
@@ -40,20 +37,13 @@ public class WallJumpPlayerState : IPlayerState
     public void UpdateLogic()
     {
         player.UsePortal(player);
-        
+
         runTimer += Time.deltaTime;
 
-        if (timer < duration)
-        {
-            Vector3 jumpDir = (wallNormal + Vector3.up).normalized;
-            player.Controller.Move(jumpDir * (player.wallJumpHorizontalSpeed * Time.deltaTime));
-            timer += Time.deltaTime;
-        }
-
-        player.MoveCharacter(player.MoveInput, player.RunInput ? player.runSpeed : player.walkSpeed);
+        player.MoveCharacter(player.MoveInput, player.runSpeed);
 
         // 착지 시 MoveState로
-        if (player.Controller.isGrounded && timer >= duration)
+        if (player.Controller.isGrounded)
             player.ChangeState(new MovePlayerState(player), PlayerStateType.Move);
     }
 

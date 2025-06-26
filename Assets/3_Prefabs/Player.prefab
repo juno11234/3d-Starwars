@@ -12957,7 +12957,8 @@ MonoBehaviour:
   maxJumpCount: 2
   slidingSpeed: 9
   jumpCount: 0
-  wallJumpHorizontalSpeed: 10
+  wallJumpHorizontalSpeed: 50
+  wallJumpHeight: 4
 --- !u!114 &3670204185492386851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12978,6 +12979,7 @@ MonoBehaviour:
     guardCool: 2
     guardStamina: 50
     maxGuardStamina: 50
+  excutionInput: 0
 --- !u!1 &4954732886689421989
 GameObject:
   m_ObjectHideFlags: 0

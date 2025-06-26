@@ -36,8 +36,8 @@ public class PlayerStateMachine : MonoBehaviour
     public bool JumpInput { get; set; }
     public bool AttackInput { get; set; }
     public bool GuardInput { get; set; }
-    public bool DodgeInput { get; set; }
-    public bool ExcutionInput { get; set; }
+
+
     public bool FlyingTrigger { get; set; }
     public bool SlidingTrigger { get; set; }
 
@@ -71,7 +71,6 @@ public class PlayerStateMachine : MonoBehaviour
     private Transform cam;
     private Transform model;
     private Vector3 velocity;
-    private Vector3 currentWallNormal;
     private Vector3 originalControllerCenter;
 
 
@@ -95,17 +94,8 @@ public class PlayerStateMachine : MonoBehaviour
     {
         if (Player.CurrentPlayer.OnDie) return;
 
-        ExcutionInput = Player.CurrentPlayer.excutionInput;
         currentPlayerState.Input();
         currentPlayerState.UpdateLogic();
-
-        if (isRestoringRotation)
-        {
-            rotationRestoreTimer += Time.deltaTime;
-            float t = rotationRestoreTimer / rotationRestoreDuration;
-            model.rotation = Quaternion.Slerp(rotationRestoreStart, rotationRestoreEnd, t);
-            if (t >= 1f) isRestoringRotation = false;
-        }
 
         velocity.y += gravity * Time.deltaTime;
         if (velocity.y < gravity)
@@ -162,16 +152,16 @@ public class PlayerStateMachine : MonoBehaviour
         return true;
     }
 
-    public float wallJumpHorizontalSpeed = 10f;
+    public float wallJumpHorizontalSpeed = 100f;
+    public float wallJumpHeight = 4f;
 
     public void TryWallJump(Vector3 jumpDir) //벽 점프 로직
     {
         animator.SetTrigger("Jump");
-        velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        velocity.y = Mathf.Sqrt(wallJumpHeight * -2f * gravity);
         jumpCount++;
-        controller.Move(jumpDir * (wallJumpHorizontalSpeed * Time.deltaTime));
 
-        return;
+        controller.Move(jumpDir * (wallJumpHorizontalSpeed * Time.deltaTime));
     }
 
     public void ResetJumpCount() //점프 횟수 초기화
@@ -180,10 +170,8 @@ public class PlayerStateMachine : MonoBehaviour
         animator.ResetTrigger("Jump");
     }
 
-    public void StartWallRun(Vector3 wallNormal) // 벽달리기
+    public void StartWallRun() // 벽달리기
     {
-        currentWallNormal = wallNormal;
-
         gravity = 0f;
         velocity.y = 0f;
 
@@ -200,23 +188,7 @@ public class PlayerStateMachine : MonoBehaviour
 
         controller.center = originalControllerCenter;
     }
-
-    //회전 복구용
-    private bool isRestoringRotation;
-    private Quaternion rotationRestoreStart;
-    private Quaternion rotationRestoreEnd;
-    private float rotationRestoreTimer;
-    private float rotationRestoreDuration = 0.3f;
-
-    public void InitiateRotationRestore(Quaternion target, float duration)
-    {
-        isRestoringRotation = true;
-        rotationRestoreStart = model.rotation;
-        rotationRestoreEnd = target;
-        rotationRestoreDuration = duration;
-        rotationRestoreTimer = 0f;
-    }
-
+    
     public void UsePortal(PlayerStateMachine player) //활공상태
     {
         if (FlyingTrigger == false) return;

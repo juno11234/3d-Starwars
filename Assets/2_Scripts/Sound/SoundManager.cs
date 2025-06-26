@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    public static SoundManager instance;
+    public static SoundManager Instance;
 
 
     public AudioSource audioSourcePrefab;
@@ -14,9 +14,9 @@ public class SoundManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -32,6 +32,15 @@ public class SoundManager : MonoBehaviour
             source.gameObject.SetActive(false);
             pool.Add(source);
         }
+    }
+
+    public void PlayBGM(BGMData bgmData)
+    {
+        audioSourcePrefab.pitch = bgmData.pitch;
+        audioSourcePrefab.volume = bgmData.volume;
+        audioSourcePrefab.clip = bgmData.bgmClip;
+        audioSourcePrefab.loop = true;
+        audioSourcePrefab.PlayOneShot(bgmData.bgmClip);
     }
 
     public void PlaySFX(SFXData data)

@@ -5,23 +5,16 @@ using UnityEngine;
 public class WallDetector : MonoBehaviour
 {
     [SerializeField] LayerMask wallLayer;
-    private CapsuleCollider triggerCollider;
+    
     private bool isTouchingWall;
     private Vector3 wallNormal;
-
-    void Awake()
-    {
-        triggerCollider = GetComponent<CapsuleCollider>();
-        
-    }
-
+    
     void OnTriggerStay(Collider other)
     {
         if ((wallLayer.value & (1 << other.gameObject.layer)) == 0)
             return;
         Vector3 closest = other.ClosestPoint(transform.position);
-        Vector3 dir = transform.position - closest;
-        wallNormal = new Vector3(dir.x, 0f, dir.z).normalized;
+        wallNormal = transform.position - closest;
         isTouchingWall = true;
     }
 

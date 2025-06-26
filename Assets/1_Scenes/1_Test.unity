@@ -887,11 +887,6 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1914286452083252551, guid: 21b1f21fdd055c747a83849662e8eb43,
         type: 3}
-      propertyPath: speedLine
-      value: 
-      objectReference: {fileID: 1206913844}
-    - target: {fileID: 1914286452083252551, guid: 21b1f21fdd055c747a83849662e8eb43,
-        type: 3}
       propertyPath: warpSpeedLine
       value: 
       objectReference: {fileID: 1206913844}

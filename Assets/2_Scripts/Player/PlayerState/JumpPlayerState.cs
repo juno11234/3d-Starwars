@@ -20,10 +20,7 @@ public class JumpPlayerState : IPlayerState
 
     public void Input()
     {
-        if (player.JumpInput && player.TryJump())
-        {
-            
-        }
+        if (player.JumpInput && player.TryJump()) { }
 
         if (player.WallDetector.IsTouchingWall(out Vector3 wallNormal) && player.RunInput)
         {
@@ -36,8 +33,7 @@ public class JumpPlayerState : IPlayerState
         player.UseSlide(player);
         player.UsePortal(player);
         
-        float speed = player.RunInput ? player.runSpeed : player.walkSpeed;
-        player.MoveCharacter(player.MoveInput, speed);
+        player.MoveCharacter(player.MoveInput, player.runSpeed);
         timer += Time.deltaTime;
         JumpCheck();
 

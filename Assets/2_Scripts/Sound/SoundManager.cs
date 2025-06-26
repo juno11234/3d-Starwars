@@ -34,15 +34,6 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void PlayBGM(BGMData bgmData)
-    {
-        audioSourcePrefab.pitch = bgmData.pitch;
-        audioSourcePrefab.volume = bgmData.volume;
-        audioSourcePrefab.clip = bgmData.bgmClip;
-        audioSourcePrefab.loop = true;
-        audioSourcePrefab.PlayOneShot(bgmData.bgmClip);
-    }
-
     public void PlaySFX(SFXData data)
     {
         PlaySound(data.sfxClip, data.volume, data.pitch);

@@ -51,6 +51,7 @@ public class PlayerStateMachine : MonoBehaviour
     public Transform SlidingTransform => slidingTransform;
     public GameObject WarpSpeedLine => warpSpeedLine;
     public GameObject SlidingSpeedLine => slidingSpeedLine;
+    public PlayerSound Sound => sound;
 
     [Header("참조")] [SerializeField] private Animator animator;
     [SerializeField] private WallDetector wallDetector;
@@ -72,7 +73,7 @@ public class PlayerStateMachine : MonoBehaviour
     private Transform model;
     private Vector3 velocity;
     private Vector3 originalControllerCenter;
-
+    private PlayerSound sound;
 
     private void Awake()
     {
@@ -80,6 +81,7 @@ public class PlayerStateMachine : MonoBehaviour
         model = transform;
         controller = GetComponent<CharacterController>();
         originalControllerCenter = controller.center;
+        sound = GetComponent<PlayerSound>();
         KnockbackClass.KnockbackFunc = CalculateKnockback;
     }
 
@@ -188,7 +190,7 @@ public class PlayerStateMachine : MonoBehaviour
 
         controller.center = originalControllerCenter;
     }
-    
+
     public void UsePortal(PlayerStateMachine player) //활공상태
     {
         if (FlyingTrigger == false) return;

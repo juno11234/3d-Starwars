@@ -39,6 +39,15 @@ public class SoundManager : MonoBehaviour
         PlaySound(data.sfxClip, data.volume, data.pitch);
     }
 
+    public void StopAllSFX()
+    {
+        foreach (var source in pool)
+        {
+            source.Stop();
+            source.gameObject.SetActive(false);
+        }
+    }
+
     private void PlaySound(AudioClip clip, float volume = 1f, float pitch = 1f)
     {
         foreach (var source in pool)
@@ -68,4 +77,5 @@ public class SoundManager : MonoBehaviour
         yield return new WaitForSeconds(delay);
         source.gameObject.SetActive(false);
     }
+    
 }

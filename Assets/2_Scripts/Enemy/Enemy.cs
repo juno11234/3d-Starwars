@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour, IFighter
     [SerializeField] Transform[] patrolPoints;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform firePoint;
-
+    [SerializeField] private SFXData fireSound;
     public Collider MainCollider => collider;
     public GameObject GameObject => gameObject;
     public EnemyStat stats = new EnemyStat();
@@ -133,7 +133,7 @@ public class Enemy : MonoBehaviour, IFighter
 
         Physics.Raycast(transform.position + Vector3.up, direction, out RaycastHit hit, stats.viewDistance);
 
-            if (hit.collider == Player.CurrentPlayer.MainCollider
+        if (hit.collider == Player.CurrentPlayer.MainCollider
             || hit.collider.TryGetComponent(out WallDetector wallDetector))
         {
             return true;
@@ -175,6 +175,7 @@ public class Enemy : MonoBehaviour, IFighter
     public void Shoot()
     {
         Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+        SoundManager.Instance.PlaySFX(fireSound);
     }
 
     private void LookPlayer()
@@ -187,7 +188,7 @@ public class Enemy : MonoBehaviour, IFighter
     public void TakeDamage(CombatEvent combatEvent)
     {
         if (die) return;
-        
+
         stats.hp -= combatEvent.Damage;
 
         if (stats.hp <= 0)

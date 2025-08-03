@@ -46,4 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSourcePrefab: {fileID: 7693000170453459263, guid: 415529633542f5d4f81fbb65d45218f4,
     type: 3}
-  initialPoolSize: 10
+  initialPoolSize: 15

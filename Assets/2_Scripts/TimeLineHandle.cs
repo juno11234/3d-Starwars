@@ -67,5 +67,6 @@ public class TimeLineHandle : MonoBehaviour
     public void LoadScene()
     {
         SceneManager.LoadScene(0);
+        SoundManager.Instance.StopAllSFX();
     }
 }

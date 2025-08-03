@@ -25,6 +25,8 @@ public class BossAttackSender : StateMachineBehaviour
         if (passStartNormalizedTime == false && startNormalizedTime < stateInfo.normalizedTime)
         {
             boss.AttackCollOn();
+            SoundManager.Instance.PlaySFX(boss.Sound.attack);
+
             passStartNormalizedTime = true;
         }
 

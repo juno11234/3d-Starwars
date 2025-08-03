@@ -3,7 +3,9 @@ guid: 1bd3be621a7be4f43a8eb84446a90331
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - flyCameraShakeTrigger: {instanceID: 0}
+  - sound: {fileID: 11400000, guid: 48daaa882b4eafd4f9c4f520ea3093a4, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

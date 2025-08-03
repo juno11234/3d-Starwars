@@ -18,7 +18,7 @@ public class Middle_BossPulse : MonoBehaviour
         Vector3 direction = (target - transform.position).normalized;
         transform.forward = direction;
     }
-
+    
 
     void Update()
     {

@@ -4742,6 +4742,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4590201257316147847, guid: 995bdab202542d144a515787508dd436,
     type: 3}
   firePoint: {fileID: 8268372191902586543}
+  fireSound: {fileID: 11400000, guid: 7eeced116585ceb48913b63e2d0f4cd3, type: 2}
   stats:
     hp: 20
     maxHp: 20

@@ -28,7 +28,9 @@ public class Middle_DeadState : IBossState
             timer += Time.deltaTime;
             if (timer >= delay)
             {
+                SoundManager.Instance.StopAllSFX();
                 SceneManager.LoadScene(0);
+
             }
         }
     }

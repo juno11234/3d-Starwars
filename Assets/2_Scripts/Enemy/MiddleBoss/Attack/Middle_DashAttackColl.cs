@@ -8,7 +8,7 @@ public class Middle_DashAttackColl : MonoBehaviour
     public bool CrashWall { get; set; }
     [SerializeField] private int damage = 20;
     private Middle_BossStateMachine boss;
-
+    private MiddleBoss_Sound sound;
 
     private void Awake()
     {
@@ -28,6 +28,7 @@ public class Middle_DashAttackColl : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        
         if (other.CompareTag("Player"))
         {
             Player.CurrentPlayer.GuardBreak();
@@ -45,6 +46,7 @@ public class Middle_DashAttackColl : MonoBehaviour
 
         if (other.CompareTag("Obstacle"))
         {
+            SoundManager.Instance.PlaySFX(boss.Sound.rushAttack);
             CrashWall = true;
         }
     }

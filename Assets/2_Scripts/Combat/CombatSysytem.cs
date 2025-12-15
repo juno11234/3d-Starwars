@@ -51,6 +51,11 @@ public class CombatSysytem : MonoBehaviour
         }
     }
 
+    public void RemoveMonster(IFighter monster)
+    {
+        monsterDictionary.Remove(monster.MainCollider);
+    }
+
     public IFighter GetMonsterOrNull(Collider coll)
     {
         return monsterDictionary[coll];

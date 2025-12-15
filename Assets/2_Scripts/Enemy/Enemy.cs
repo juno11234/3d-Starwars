@@ -53,7 +53,16 @@ public class Enemy : MonoBehaviour, IFighter
 
     private void Update()
     {
-        if (die) return;
+        if (die)
+        {
+            var animState = animator.GetCurrentAnimatorStateInfo(0);
+            if (animState.IsName("Die") && animState.normalizedTime < 0.9f)
+            {
+                Destroy(gameObject);
+            }
+        }
+
+        ;
 
         if (combatMode == false)
         {
@@ -207,5 +216,7 @@ public class Enemy : MonoBehaviour, IFighter
         agent.isStopped = true;
         collider.enabled = false;
         animator.SetTrigger("Die");
+
+        CombatSysytem.Instance.RemoveMonster(this);
     }
 }

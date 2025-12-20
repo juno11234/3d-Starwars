@@ -37,8 +37,7 @@ public class SlidingPlayerState : IPlayerState
         Vector3 move = downDir.normalized * (player.slidingSpeed * Time.deltaTime);
         player.Controller.Move(move);
         player.SlidingMove();
-
-
+        
         player.Model.rotation = player.SlidingTransform.rotation;
     }
 

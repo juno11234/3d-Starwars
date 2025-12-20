@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossPulseAttackSender : StateMachineBehaviour
+public class EnemyShootSender : StateMachineBehaviour
 {
     [Range(0f, 1f)] public float attackTime = 0f;
     private bool passAttackTime;
 
-    private Middle_BossStateMachine boss;
+    private Enemy enemy;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         passAttackTime = false;
-        boss = animator.gameObject.GetComponentInParent<Middle_BossStateMachine>();
+        enemy = animator.gameObject.GetComponentInParent<Enemy>();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -21,9 +21,6 @@ public class BossPulseAttackSender : StateMachineBehaviour
     {
         if (passAttackTime == false && attackTime < stateInfo.normalizedTime)
         {
-            boss.PulsePattern();
-            SoundManager.Instance.PlaySFX(boss.Sound.pulseAttack);
-            BossCameraShakeTrigger.Instance.Shake();
             passAttackTime = true;
         }
     }

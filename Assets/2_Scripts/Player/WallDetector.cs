@@ -14,7 +14,7 @@ public class WallDetector : MonoBehaviour
         if ((wallLayer.value & (1 << other.gameObject.layer)) == 0)
             return;
         Vector3 closest = other.ClosestPoint(transform.position);
-        wallNormal = transform.position - closest;
+        wallNormal = (transform.position - closest).normalized;
         isTouchingWall = true;
     }
 

@@ -88,12 +88,18 @@ public class Player : MonoBehaviour, IFighter
 
     public void AttackCollOn()
     {
-        blade.collider.enabled = true;
+        
     }
 
     public void AttackCollOff()
     {
         blade.collider.enabled = false;
+    }
+
+    public void Attack()
+    {
+        blade.collider.enabled = true;
+        CurrentPlayer.AttackCoroutine();
     }
 
     public void TakeDamage(CombatEvent combatEvent)

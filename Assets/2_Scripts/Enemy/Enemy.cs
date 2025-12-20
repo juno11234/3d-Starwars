@@ -79,7 +79,7 @@ public class Enemy : MonoBehaviour, IFighter
 
             if (distance < stats.viewDistance && WhatchPlayer())
             {
-                Attack();
+                Shoot();
             }
             else
             {
@@ -175,16 +175,16 @@ public class Enemy : MonoBehaviour, IFighter
         agent.SetDestination(Player.CurrentPlayer.transform.position);
     }
 
-    private void Attack()
+    public void Attack()
     {
-        agent.isStopped = true;
-        animator.SetTrigger("Attack");
+        Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+        SoundManager.Instance.PlaySFX(fireSound);
     }
 
     public void Shoot()
     {
-        Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
-        SoundManager.Instance.PlaySFX(fireSound);
+        agent.isStopped = true;
+        animator.SetTrigger("Attack");
     }
 
     private void LookPlayer()

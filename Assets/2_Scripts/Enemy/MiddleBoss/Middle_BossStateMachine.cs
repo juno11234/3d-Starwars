@@ -118,11 +118,6 @@ public class Middle_BossStateMachine : MonoBehaviour, IFighter
         else return false;
     }
 
-    public void PulsePattern()
-    {
-        Instantiate(pulse, transform.position, Quaternion.identity);
-    }
-
     public void LookPlayer()
     {
         Vector3 direction = Player.CurrentPlayer.transform.position - transform.position;
@@ -138,6 +133,13 @@ public class Middle_BossStateMachine : MonoBehaviour, IFighter
     public void AttackCollOff()
     {
         attackColl.SetActive(false);
+    }
+
+    public void Attack()
+    {
+        Instantiate(pulse, transform.position, Quaternion.identity);
+        SoundManager.Instance.PlaySFX(sound.pulseAttack);
+        BossCameraShakeTrigger.Instance.Shake();
     }
 
     public void TakeDamage(CombatEvent combatEvent)

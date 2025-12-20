@@ -2,26 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnermyShootSender : StateMachineBehaviour
+public class FighterAttackSender : StateMachineBehaviour
 {
     [Range(0f, 1f)] public float attackTime = 0f;
     private bool passAttackTime;
 
-    private Enemy enemy;
+    private IFighter fighter;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         passAttackTime = false;
-        enemy = animator.gameObject.GetComponentInParent<Enemy>();
+        fighter = animator.gameObject.GetComponentInParent<IFighter>();
     }
-
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (passAttackTime == false && attackTime < stateInfo.normalizedTime)
         {
-            enemy.Shoot();
+            fighter.Attack();
             passAttackTime = true;
         }
     }

@@ -6,6 +6,16 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour, IFighter
 {
+    public enum EnemyState
+    {
+        Patrol,
+        Chase,
+        Attack,
+        Die
+    }
+
+    private EnemyState state;
+
     private static readonly int SPEED = Animator.StringToHash("Speed");
 
     [System.Serializable]
@@ -32,10 +42,9 @@ public class Enemy : MonoBehaviour, IFighter
     private NavMeshAgent agent;
     private int destinationIndex = 0;
     private AnimatorStateInfo currentState;
+    private float _halfViewAngleCosine; // 캐시된 절반 시야각의 코사인 값
 
-    private bool isPatrol;
-    private bool combatMode = false;
-    private bool die = false;
+    private bool isPatrolDelaying = false;
 
     private void Awake()
     {
@@ -43,102 +52,171 @@ public class Enemy : MonoBehaviour, IFighter
         collider = GetComponent<Collider>();
         animator = GetComponentInChildren<Animator>();
         agent = GetComponent<NavMeshAgent>();
+        _halfViewAngleCosine = Mathf.Cos(stats.viewAngle * 0.5f * Mathf.Deg2Rad);
     }
 
     private void Start()
     {
         CombatSysytem.Instance.RegisterMonster(this);
-        Patrol();
+        ChangeState(EnemyState.Patrol);
     }
 
     private void Update()
     {
-        if (die)
+        switch (state)
         {
-            var animState = animator.GetCurrentAnimatorStateInfo(0);
-            if (animState.IsName("Die") && animState.normalizedTime < 0.9f)
-            {
-                Destroy(gameObject);
-            }
+            case EnemyState.Patrol:
+                UpdatePatrol();
+                break;
+            case EnemyState.Chase:
+                UpdateChase();
+                break;
+            case EnemyState.Attack:
+                UpdateAttack();
+                break;
+            case EnemyState.Die:
+                UpdateDie();
+                break;
         }
-
-        ;
-
-        if (combatMode == false)
+    }
+    
+    private void ChangeState(EnemyState newState)
+    {
+        if (state == newState) return;
+        
+        state = newState;
+        
+        switch (state)
         {
-            if (WhatchPlayer() || stats.hp < stats.maxHp) ChaseStart();
+            case EnemyState.Patrol:
+                agent.isStopped = false;
+                agent.speed = 2f;
+                animator.SetFloat(SPEED, 0.5f);
+                stats.viewDistance = 10f; // Reset view distance
+                if (!isPatrolDelaying)
+                {
+                    PatrolNextPoint();
+                }
+                break;
+            case EnemyState.Chase:
+                agent.isStopped = false;
+                agent.speed = 9f;
+                animator.SetFloat(SPEED, 1f);
+                stats.viewDistance = stats.range;
+                break;
+            case EnemyState.Attack:
+                agent.isStopped = true;
+                animator.ResetTrigger("Move");
+                animator.SetTrigger("Attack");
+                break;
+            case EnemyState.Die:
+                agent.isStopped = true;
+                collider.enabled = false;
+                animator.SetTrigger("Die");
+                CombatSysytem.Instance.RemoveMonster(this);
+                break;
+        }
+    }
+    
+    private void UpdatePatrol()
+    {
+        if (WatchPlayer() || stats.hp < stats.maxHp)
+        {
+            ChangeState(EnemyState.Chase);
+            return;
+        }
+        
+        PatrolNextPoint();
+    }
+    
+    private void UpdateChase()
+    {
+        LookPlayer();
+        float distance = Vector3.Distance(Player.CurrentPlayer.transform.position, transform.position);
 
-            PatrolNextPoint();
+        // Attack if in range and visible
+        if (distance <= stats.viewDistance && WatchPlayer())
+        {
+            ChangeState(EnemyState.Attack);
+        }
+        // Go back to patrol if player is lost
+        else if (distance > stats.range)
+        {
+            ChangeState(EnemyState.Patrol);
         }
         else
         {
-            float distance = Vector3.Distance(Player.CurrentPlayer.transform.position, transform.position);
-            currentState = animator.GetCurrentAnimatorStateInfo(0);
-
-            LookPlayer();
-
-            if (distance < stats.viewDistance && WhatchPlayer())
+            // Keep chasing
+            if (agent.isStopped == false)
             {
-                Shoot();
-            }
-            else
-            {
-                Chase();
+                agent.SetDestination(Player.CurrentPlayer.transform.position);
             }
         }
     }
-
-    private void Patrol()
+    
+    private void UpdateAttack()
     {
-        if (combatMode) return;
-        if (patrolPoints.Length == 0)
+        LookPlayer();
+        
+        currentState = animator.GetCurrentAnimatorStateInfo(0);
+        if (currentState.IsName("Shoot") && currentState.normalizedTime >= 1.0f)
         {
+            ChangeState(EnemyState.Chase);
             return;
         }
-
-        agent.SetDestination(patrolPoints[destinationIndex].position);
-        animator.SetFloat(SPEED, 0.5f);
-        isPatrol = true;
-        agent.speed = 2f;
+    
+        Vector3 directionToPlayer = Player.CurrentPlayer.transform.position - transform.position;
+        if (directionToPlayer.sqrMagnitude > (stats.viewDistance * stats.viewDistance))
+        {
+            ChangeState(EnemyState.Chase);
+        }
+    }
+    
+    private void UpdateDie()
+    {
+        currentState = animator.GetCurrentAnimatorStateInfo(0);
+        if (currentState.IsName("Die") && currentState.normalizedTime > 0.95f)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void PatrolNextPoint()
     {
-        if (patrolPoints.Length == 0) return;
+        if (patrolPoints.Length == 0 || isPatrolDelaying) return;
 
-        if (agent.pathPending == false && agent.remainingDistance < 0.2f && isPatrol)
+        if (agent.pathPending == false && agent.remainingDistance < 0.2f)
         {
-            if (destinationIndex < patrolPoints.Length - 1)
-            {
-                destinationIndex++;
-                StartCoroutine(PatrolDelay());
-            }
-            else
-            {
-                destinationIndex = 0;
-                StartCoroutine(PatrolDelay());
-            }
+            StartCoroutine(PatrolDelay());
         }
     }
 
     IEnumerator PatrolDelay()
     {
-        isPatrol = false;
-
+        isPatrolDelaying = true;
         animator.SetFloat(SPEED, 0f);
-        yield return new WaitForSeconds(3f);
 
-        Patrol();
+        yield return new WaitForSeconds(3f);
+        
+        isPatrolDelaying = false;
+
+        if (state == EnemyState.Patrol)
+        {
+            destinationIndex = (destinationIndex + 1) % patrolPoints.Length;
+            agent.SetDestination(patrolPoints[destinationIndex].position);
+            animator.SetFloat(SPEED, 0.5f);
+        }
     }
 
-    private bool WhatchPlayer()
+    private bool WatchPlayer()
     {
         Vector3 direction = (Player.CurrentPlayer.transform.position - transform.position);
         float distance = direction.magnitude;
         direction.Normalize();
-        float angle = Vector3.Angle(transform.forward, direction);
+        float dotProduct = Vector3.Dot(transform.forward, direction);
+        float halfViewAngleCosine = _halfViewAngleCosine;
 
-        if (angle > stats.viewAngle * 0.5f || distance > stats.viewDistance) return false;
+        if (dotProduct < halfViewAngleCosine || distance > stats.viewDistance) return false;
 
         Physics.Raycast(transform.position + Vector3.up, direction, out RaycastHit hit, stats.viewDistance);
 
@@ -152,39 +230,11 @@ public class Enemy : MonoBehaviour, IFighter
             return false;
         }
     }
-
-
-    private void ChaseStart()
-    {
-        combatMode = true;
-        stats.viewDistance = stats.range;
-        animator.SetFloat(SPEED, 1f);
-        agent.speed = 9f;
-        agent.SetDestination(Player.CurrentPlayer.transform.position);
-    }
-
-
-    private void Chase()
-    {
-        if (currentState.IsName("Shoot")) return;
-
-        animator.ResetTrigger("Attack");
-        animator.SetTrigger("Move");
-        agent.isStopped = false;
-        animator.SetFloat(SPEED, 1f);
-        agent.SetDestination(Player.CurrentPlayer.transform.position);
-    }
-
+    
     public void Attack()
     {
         Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
         SoundManager.Instance.PlaySFX(fireSound);
-    }
-
-    public void Shoot()
-    {
-        agent.isStopped = true;
-        animator.SetTrigger("Attack");
     }
 
     private void LookPlayer()
@@ -193,30 +243,25 @@ public class Enemy : MonoBehaviour, IFighter
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
     }
-
+    
     public void TakeDamage(CombatEvent combatEvent)
     {
-        if (die) return;
+        if (state == EnemyState.Die) return;
 
         stats.hp -= combatEvent.Damage;
 
         if (stats.hp <= 0)
         {
-            Die();
+            ChangeState(EnemyState.Die);
         }
         else
         {
             animator.SetTrigger("Hit");
+            if(state == EnemyState.Patrol)
+            {
+                ChangeState(EnemyState.Chase);
+            }
         }
     }
 
-    private void Die()
-    {
-        die = true;
-        agent.isStopped = true;
-        collider.enabled = false;
-        animator.SetTrigger("Die");
-
-        CombatSysytem.Instance.RemoveMonster(this);
-    }
 }

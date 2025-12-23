@@ -14,21 +14,25 @@ public class Middle_ChaseState : IBossState
         this.boss = boss;
     }
 
-    public void Enter() { }
+    public void Enter()
+    {
+    }
 
     public void UpdateLogic()
     {
-        float distance = Vector3.Distance(Player.CurrentPlayer.transform.position, boss.transform.position);
         boss.LookPlayer();
         if (boss.OnDie)
         {
             boss.ChangeState(new Middle_DeadState(boss), MiddleBossStateType.ExcutionReady);
         }
-        else if (boss.TrySkill())
+
+        if (boss.TrySkill())
         {
             boss.UseSkill();
         }
-        else if (distance < range)
+
+        Vector3 directionToPlayer = Player.CurrentPlayer.transform.position - boss.transform.position;
+        if (directionToPlayer.sqrMagnitude < (range * range))
         {
             boss.ChangeState(new Middle_NormalAttackState(boss), MiddleBossStateType.NormalAttack);
         }

@@ -24,25 +24,31 @@ public class FlyingPlayerState : IPlayerState
     }
 
     public void Input() { }
+    
 
     public void UpdateLogic()
     {
         if (waypoints == null || waypoints.Count == 0) return;
-        Transform target = waypoints[index];
-        Vector3 dir = (target.position - player.transform.position).normalized;
 
-        player.Controller.Move(dir * (flySpeed * Time.deltaTime));
+        Vector3 targetPosition = waypoints[index].position;
+        Vector3 toTarget = targetPosition - player.transform.position;
 
-        player.Model.rotation =
-            Quaternion.Slerp(player.Model.rotation, Quaternion.LookRotation(dir), 5f * Time.deltaTime);
-
-        if (Vector3.Distance(player.transform.position, target.position) < 0.2f)
+        if (toTarget.sqrMagnitude < 0.04f)
         {
             index++;
-            thisTimeLook = true;
             if (index >= waypoints.Count)
+            {
                 player.ChangeState(new JumpPlayerState(player), PlayerStateType.Jump);
+                return; 
+            }
+            targetPosition = waypoints[index].position;
+            toTarget = targetPosition - player.transform.position;
         }
+        
+        Vector3 dir = toTarget.normalized;
+        player.Controller.Move(dir * (flySpeed * Time.deltaTime));
+        player.Model.rotation =
+            Quaternion.Slerp(player.Model.rotation, Quaternion.LookRotation(dir), 5f * Time.deltaTime);
     }
 
     public void Exit()

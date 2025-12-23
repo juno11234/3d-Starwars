@@ -21,6 +21,7 @@ public class EnemyShootSender : StateMachineBehaviour
     {
         if (passAttackTime == false && attackTime < stateInfo.normalizedTime)
         {
+            enemy.Attack();
             passAttackTime = true;
         }
     }

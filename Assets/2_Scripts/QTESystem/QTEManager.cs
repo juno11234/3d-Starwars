@@ -23,6 +23,7 @@ public class QTEManager : MonoBehaviour
     private List<GameObject> keySlots = new List<GameObject>();
     private Dictionary<string, Sprite> keySpriteDict = new Dictionary<string, Sprite>();
     private List<string> qteKey;
+    private readonly List<int> qteKeyHash = new List<int>();
     private InputActionMap qteMap;
     private int currentIndex = 0;
     private float timer;
@@ -35,7 +36,7 @@ public class QTEManager : MonoBehaviour
     {
         foreach (var entry in keySprites)
             keySpriteDict[entry.name] = entry.sprite;
-        
+
         qtePanel.SetActive(false);
     }
 
@@ -57,17 +58,23 @@ public class QTEManager : MonoBehaviour
 
         foreach (var action in qteMap.actions)
         {
-            if (actionNames.Contains(action.name))
-                action.performed += OnActionPerformed;
+            // 지정된 키만 감지하게 하고 싶으면 주석해제
+            //if (actionNames.Contains(action.name))
+            action.performed += OnActionPerformed;
         }
 
-       
+
         qteKey = actionNames;
+        qteKeyHash.Clear();
+        foreach (var key in qteKey)
+        {
+            qteKeyHash.Add(Animator.StringToHash(key));
+        }
+
         currentIndex = 0;
         timer = duration;
         isActive = true;
         ShowQTEUI();
-        Debug.Log("QTE started");
     }
 
     private void OnActionPerformed(InputAction.CallbackContext context)
@@ -75,9 +82,9 @@ public class QTEManager : MonoBehaviour
         //버튼 눌림
         if (isActive == false) return;
 
-        string actionName = context.action.name;
+        var actionNameHash = Animator.StringToHash(context.action.name);
 
-        if (actionName == qteKey[currentIndex])
+        if (actionNameHash == qteKeyHash[currentIndex])
         {
             MarkKeySuccess(currentIndex);
             currentIndex++;
@@ -97,7 +104,7 @@ public class QTEManager : MonoBehaviour
         isActive = false;
         qteMap.Disable();
         HideQTEUI();
-        
+
         foreach (var action in qteMap.actions)
         {
             action.performed -= OnActionPerformed;
@@ -106,21 +113,20 @@ public class QTEManager : MonoBehaviour
         if (success)
         {
             OnQTESuccess?.Invoke();
-            Debug.Log("QTE finished");
+            Debug.Log("QTE 성공");
         }
         else
         {
             OnQTEFailed?.Invoke();
-            Debug.Log("QTE failed");
+            Debug.Log("QTE 실패");
         }
     }
 
     private void ShowQTEUI()
     {
-        
         qtePanel.SetActive(true);
         ClearQTEUI();
-        
+
         foreach (string key in qteKey)
         {
             GameObject slot = Instantiate(keySlotPrefab, keyContainer);

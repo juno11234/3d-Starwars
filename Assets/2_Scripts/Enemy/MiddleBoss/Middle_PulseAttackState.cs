@@ -19,6 +19,7 @@ public class Middle_PulseAttackState : IBossState
 
     public void UpdateLogic()
     {
+        
         var info = boss.Animator.GetCurrentAnimatorStateInfo(0);
         if (boss.OnDie)
         {

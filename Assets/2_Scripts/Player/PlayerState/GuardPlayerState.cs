@@ -17,7 +17,6 @@ public class GuardPlayerState : IPlayerState
     {
         timer = 0f;
         player.Animator.SetBool("Guard", true);
-        //Player.CurrentPlayer.Guard();
         Player.CurrentPlayer.Parry();
     }
 
@@ -26,7 +25,6 @@ public class GuardPlayerState : IPlayerState
     public void UpdateLogic()
     {
         timer += Time.deltaTime;
-
         if (timer >= parryTime) Player.CurrentPlayer.ParryCancel();
 
         var info = player.Animator.GetCurrentAnimatorStateInfo(0);
